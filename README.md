@@ -4,7 +4,7 @@ This is a VHDL implementation of SAP-1, as described in the book "Malvino -
 Digital Computer Electronics". 
 
 It uses behavioral modeling to create the blocks of the computer and structural
-model to assemble these block in a computational unit, which can be simulated with ghdl. 
+model to assemble these block into a computational unit, which can be simulated with ghdl. 
 
 You can program the computer writing in the file ```RAM.vhd``` and simulate the
 result with the provided testbench, which is the file ```sap1_tb.vhd```.
