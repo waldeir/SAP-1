@@ -11,7 +11,7 @@ the SAP-1 chapter can be visualized in the simulation.
 
 ![](images/block_diagram_sap1.png)
 
-**Figure 1**: Structural model of SAP1 where each block uses behavioral model.
+**Figure 1**: Structural model of SAP1 where each block uses behavioral model. Beside each signal, there is their name implemented in the VHDL code.
 
 
 You can program the computer writing in the file `RAM.vhd` and simulate the
