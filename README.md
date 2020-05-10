@@ -1,7 +1,9 @@
 # Simple As Possible computer - 1  (SAP-1)
 
 This is a VHDL implementation of the well known computer SAP-1, described in
-the book "Malvino - Digital Computer Electronics".  It uses behavioral modeling
+the book
+[Malvino - Digital Computer Electronics - 3rd Edition](https://www.amazon.com/Digital-Computer-Electronics-Albert-Malvino/dp/0028005945).
+It uses behavioral modeling
 to create the blocks of the computer and structural modeling to assemble these
 block into a computational unit. The signals active states where chosen to
 match the ones described in the book, therefore the same waveforms presented in
