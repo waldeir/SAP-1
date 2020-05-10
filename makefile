@@ -53,12 +53,10 @@ work/sap1_tb.o: sap1_tb.vhd
 	@echo Analyzing sap1_tb.vhd
 	$(CC) -a --workdir=work sap1_tb.vhd 
 
-
-
-
 sap1_tb: work/sap1_tb.o work/sap.o work/accumulator.o work/addsub.o work/pc.o work/regb.o work/regout.o work/mar.o work/ram.o work/ir.o work/ctrlseq.o work/ringcounter.o         
 	@echo Elaborating sap1_tb
 	$(CC) -e --workdir=work sap1_tb 
 
 
-
+clean :
+	rm work/*.o sap1_tb *.o work/*.cf
