@@ -11,7 +11,7 @@ the SAP-1 chapter can be visualized in the simulation.
 
 ![](images/block_diagram_sap1.png)
 
-**Figure 1**: Structural model of SAP1 where each block uses behavioral model.
+**Figure 1**: Structural model of SAP1, where each block uses behavioral model.
 Beside each signal, there is their name implemented in the VHDL code.
 
 ## Particularities of this implementation
@@ -30,13 +30,13 @@ and are distributed to the corresponding units.
 
 **Figure 2**: Inputs and outputs of this SAP-1 implementation.
 
-The input through *Memory Address Register* (MAR) was not implemented, but you
+The **input of data** through *Memory Address Register* (MAR) was not implemented, but you
 can program the computer directly writing in the file `RAM.vhd` and simulate
 the result with the provided *testbench*, which is the file `sap1_tb.vhd`.
 
 Although the signals `clr` and `bar_clr` appear in the block diagrams, they
 remain disabled throughout the simulation, because they are only used to switch
-to input mode, which was not implemented.
+to **input of data** mode, which was not implemented.
 
 
 ## Linux and GHDL
