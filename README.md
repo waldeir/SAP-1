@@ -20,7 +20,7 @@ result with the provided *testbench*, which is the file `sap1_tb.vhd`.
 
 ## Linux and GHDL
 
-If you are in linux be sure to have the program ghdl installed and run
+If you are in linux be sure to have the program *ghdl* installed and run
 
 ```bash
 git clone https://github.com/waldeir/sap1
