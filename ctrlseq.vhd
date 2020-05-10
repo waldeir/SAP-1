@@ -21,9 +21,9 @@ end entity ctrlseq;
 
 
 architecture behav of ctrlseq is
- -- Using microprogramming to store microinstructions, i.e. using a rom 
--- to retrieve control words from
--- signal rom_addr: std_logic_vector(3 downto 0);
+-- Using microprogramming to store microinstructions, i.e. using a rom to
+-- retrieve control words from. This is the same as the Table 10.3 of "Malvino -
+-- Digital Computer Electronics - 3rd Edition" shows.
 
 type ROM_type is array (0 to 15 ) of std_logic_vector(11 downto 0);
 constant rom_data: ROM_type:=(
