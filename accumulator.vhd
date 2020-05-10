@@ -6,13 +6,13 @@
   entity accumulator is
     port (
     -- When LOW read from W bus
-    bar_La : in std_logic;
+    bar_la : in std_logic;
     -- When HIGH write to the W bus
-    Ea     : in std_logic;
+    ea     : in std_logic;
     -- Clock signal
-    CLK    : in std_logic;
+    clk    : in std_logic;
     -- The input and output port to W bus	
-    W_bus  : inout std_logic_vector (7 downto 0):= "ZZZZZZZZ";
+    w_bus  : inout std_logic_vector (7 downto 0):= "ZZZZZZZZ";
     -- The output to the addsub
     out_to_addsub: out std_logic_vector (7 downto 0)
     );
@@ -23,20 +23,20 @@
   signal accRegister: std_logic_vector ( 7 downto 0);	
 
   begin
-    acc: process(CLK, Ea, bar_La, W_bus)
+    acc: process(clk, ea, bar_la, w_bus)
       begin 
-        --if (rising_edge(CLK)) then
-        if (CLK = '1') then
-          if (Ea = '1' and bar_La = '1') then
-            W_bus <= accRegister;
-          elsif (Ea = '0' and bar_La = '0') then
-            accRegister <= W_bus;
-            out_to_addsub <= W_bus;
-          elsif (Ea = '0' and bar_La = '1') then
-            W_bus <= "ZZZZZZZZ";
+        --if (rising_edge(clk)) then
+        if (clk = '1') then
+          if (ea = '1' and bar_la = '1') then
+            w_bus <= accRegister;
+          elsif (ea = '0' and bar_la = '0') then
+            accRegister <= w_bus;
+            out_to_addsub <= w_bus;
+          elsif (ea = '0' and bar_la = '1') then
+            w_bus <= "ZZZZZZZZ";
           else
-            -- Never use Ea = '0' and bar_La = '1'
-            W_bus <= "XXXXXXXX";
+            -- Never use ea = '0' and bar_la = '1'
+            w_bus <= "XXXXXXXX";
           end if;
         end if;
       end process acc;

@@ -6,11 +6,11 @@ use IEEE.numeric_std.ALL;
 entity ram is
   port (
     -- Enable read from MAR 
-    bar_CE      : in std_logic;
+    bar_ce      : in std_logic;
     -- Input from MAR
     in_from_mar : in std_logic_vector(3 downto 0 );
     -- Output to W bus
-    W_bus       : out std_logic_vector(7 downto 0 )
+    w_bus       : out std_logic_vector(7 downto 0 )
   );
 end entity ram;
 
@@ -40,13 +40,13 @@ constant ram_data: ram_type:=(
 
 
 begin
-  retrContent: process(bar_CE)
+  retrContent: process(bar_ce)
   begin
     --if (rising_edge(CLK)) then
-      if (bar_CE = '0') then
-        W_bus <= ram_data(to_integer(unsigned(in_from_mar)));
+      if (bar_ce = '0') then
+        w_bus <= ram_data(to_integer(unsigned(in_from_mar)));
       else
-        W_bus <= "ZZZZZZZZ";
+        w_bus <= "ZZZZZZZZ";
       end if;
     --end if;
   end process retrContent;

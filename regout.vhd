@@ -7,11 +7,11 @@ entity regout is
     
   port (
   -- Read from W bus 
-  bar_Lo   : in std_logic;
+  bar_lo   : in std_logic;
   -- Clock
-  CLK      : in std_logic;
+  clk      : in std_logic;
   -- The input port from W bus 
-  W_bus    : in std_logic_vector(7 downto 0);
+  w_bus    : in std_logic_vector(7 downto 0);
   -- The output of the sap
   sap_out  : out std_logic_vector(7 downto 0)
     );
@@ -20,11 +20,11 @@ end entity regout;
 architecture behav of regout is
 
 begin
-  regisOut: process(CLK,bar_Lo, W_bus)
+  regisOut: process(clk,bar_lo, w_bus)
   begin
-  -- if (rising_edge(CLK)) then
-    if (bar_Lo = '0') then
-      sap_out <= W_bus;
+  -- if (rising_edge(clk)) then
+    if (bar_lo = '0') then
+      sap_out <= w_bus;
     end if;
   -- end if;
   end process regisOut;

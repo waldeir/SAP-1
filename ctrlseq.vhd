@@ -9,10 +9,10 @@ entity ctrlseq is
   microinstruction : out std_logic_vector(11 downto 0);
   -- LDA, ADD, SUB, HLT or OUT in binary form
   macroinstruction : in std_logic_vector(3 downto 0);
-  -- CLK
-  CLK              : in std_logic;
+  -- clk
+  clk              : in std_logic;
   -- CLR
-  bar_CLR          : in std_logic;
+  bar_clr          : in std_logic;
   -- Halt
   HLT              : out std_logic
   );
@@ -74,8 +74,8 @@ constant rom_data: ROM_type:=(
 
 
   component Ring_counter is
-    Port ( bar_CLK : in  std_logic;
-           bar_CLR : in  std_logic;
+    Port ( bar_clk : in  std_logic;
+           bar_clr : in  std_logic;
            Q : out  std_logic_vector(5 downto 0));
   end component;
 signal ringCounter : std_logic_vector(5 downto 0);
@@ -84,8 +84,8 @@ signal rom_addrSignal : std_logic_vector (3 downto 0);
 
 begin
 -- Ring counter instantiation
-RC: Ring_counter port map (bar_CLK => CLK,
-                           bar_CLR => bar_CLR,  -- TODO rever esse CLR
+RC: Ring_counter port map (bar_clk => clk,
+                           bar_clr => bar_clr,  -- TODO rever esse CLR
                            Q   => ringCounter);
 
 process (ringCounter)
