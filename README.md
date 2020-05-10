@@ -22,7 +22,7 @@ If you are in linux be sure to have the program ghdl installed and run
 
 ```bash
 git clone https://github.com/waldeir/sap1
-cd sap1
+cd sap1/
 make
 ./sap1_tb --vcd=waveform.vcd
 ```
