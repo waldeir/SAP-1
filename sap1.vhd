@@ -1,17 +1,18 @@
 library IEEE;
 use IEEE.std_logic_1164.ALL;
 
-entity sap is
+entity sap1 is
 	port (
-	HLT     : out std_logic;
+  HLT     : out std_logic;
   CLK     : in std_logic;
+  bar_CLK : in std_logic;
   CLR     : in std_logic;
   bar_CLR : in std_logic;
   sap_out : out std_logic_vector(7 downto 0)
 	);
-end entity sap;
+end entity sap1;
 
-architecture behav of sap is
+architecture structure of sap1 is
 
 ------------------------------
 --  Components declaration  --
@@ -212,7 +213,7 @@ pc0: pc port map (
                  Cp      => microinstruction(11),
                  Ep      => microinstruction(10),
                  W_bus   => W_bus(3 downto 0),
-                 bar_CLK => CLK,
+                 bar_CLK => bar_CLK,
                  bar_CLR => bar_CLR
                  );
 
@@ -261,7 +262,7 @@ ctrlseq0 : ctrlseq port map(
                  );
 
 
-end behav;
+end structure;
 
 
 
