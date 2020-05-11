@@ -44,8 +44,8 @@ to **input of data** mode, which was not implemented.
 If you are in linux be sure to have the program *ghdl* installed and run
 
 ```bash
-git clone https://github.com/waldeir/sap1
-cd sap1/
+git clone https://github.com/waldeir/SAP-1
+cd SAP-1/
 make
 ./sap1_tb --vcd=waveform.vcd
 ```
