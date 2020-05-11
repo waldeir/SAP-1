@@ -51,7 +51,7 @@ make
 ```
 
 The procedure generates the waveform file `waveform.vcd`, that can be opened in
-a program like *gtkwave*. The variable names of signals are presented in
+a program like *gtkwave*. The names of signal variables are presented in
 **Figure 1**, and their behavior during time are stored in the file
 `waveform.vcd`.
 
