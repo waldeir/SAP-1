@@ -72,27 +72,27 @@ constant rom_data: ROM_type:=(
    "000000000000"
   );
   
-signal ringCounter : std_logic_vector(5 downto 0);
+signal t_state: std_logic_vector(5 downto 0);
 signal rom_addr : integer range 0 to 15;
  
 
   component Ring_counter is
     Port ( bar_clk : in  std_logic;
            bar_clr : in  std_logic;
-           Q : out  std_logic_vector(5 downto 0));
+           t_state : out  std_logic_vector(5 downto 0));
   end component;
 
 
 
 begin
 -- Ring counter instantiation
-RC: Ring_counter port map (bar_clk => clk,
+ring_counter0: ring_counter port map (bar_clk => clk,
                            bar_clr => bar_clr,  -- TODO rever esse CLR
-                           Q   => ringCounter);
+                           t_state   => t_state);
 
-process (ringCounter)
+process (t_state)
 begin
-    case (ringCounter) is
+    case (t_state) is
       ----------------Fetch Cycle-----------------------
       -- T1
       when "000001" => -- rom_addr <= "0000";   -- 0H
