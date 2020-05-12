@@ -10,7 +10,7 @@ in the simulation.
 
 ![](images/block_diagram_sap1.png)
 
-**Figure 1**: Structural model of SAP1, where each block uses behavioral model.
+**Figure 1**: Structural model of SAP1, where each block uses behavioral modelling.
 Beside each signal, there is their name implemented in the VHDL code.
 
 ## Particularities of this implementation
