@@ -1,3 +1,5 @@
+Language: [Portuguese](https://github.com/waldeir/SAP-1/blob/master/README.pt.md)
+
 # Simple As Possible computer - 1  (SAP-1)
 
 This is a VHDL implementation of the well known computer SAP-1, described in
