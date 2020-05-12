@@ -5,53 +5,53 @@ all: work/sap1_tb.o work/sap1.o work/accumulator.o work/addsub.o work/pc.o work/
 
 CC = ghdl
 
-work/accumulator.o: accumulator.vhd
+work/accumulator.o: src/accumulator.vhd
 	@echo Analyzing accumulator.vhd
-	$(CC) -a --workdir=work accumulator.vhd
+	$(CC) -a --workdir=work src/accumulator.vhd
 
-work/addsub.o: addsub.vhd       
+work/addsub.o: src/addsub.vhd       
 	@echo Analyzing addsub.vhd       
-	$(CC) -a --workdir=work addsub.vhd
+	$(CC) -a --workdir=work src/addsub.vhd
 
-work/pc.o: pc.vhd           
+work/pc.o: src/pc.vhd           
 	@echo Analyzing pc.vhd
-	$(CC) -a --workdir=work pc.vhd
+	$(CC) -a --workdir=work src/pc.vhd
 
-work/regb.o: regb.vhd         
+work/regb.o: src/regb.vhd         
 	@echo Analyzing regb.vhd
-	$(CC) -a --workdir=work regb.vhd
+	$(CC) -a --workdir=work src/regb.vhd
 
-work/regout.o: regout.vhd       
+work/regout.o: src/regout.vhd       
 	@echo Analyzing regout.vhd
-	$(CC) -a --workdir=work regout.vhd
+	$(CC) -a --workdir=work src/regout.vhd
 
-work/mar.o: mar.vhd          
+work/mar.o: src/mar.vhd          
 	@echo Analyzing mar.vhd
-	$(CC) -a --workdir=work mar.vhd
+	$(CC) -a --workdir=work src/mar.vhd
 
-work/ram.o: ram.vhd          
+work/ram.o: src/ram.vhd          
 	@echo Analyzing ram.vhd
-	$(CC) -a --workdir=work ram.vhd
+	$(CC) -a --workdir=work src/ram.vhd
 
-work/ir.o: ir.vhd           
+work/ir.o: src/ir.vhd           
 	@echo Analyzing ir.vhd
-	$(CC) -a --workdir=work ir.vhd
+	$(CC) -a --workdir=work src/ir.vhd
 
-work/ctrlseq.o: ctrlseq.vhd      
+work/ctrlseq.o: src/ctrlseq.vhd      
 	@echo Analyzing ctrlseq.vhd
-	$(CC) -a --workdir=work ctrlseq.vhd
+	$(CC) -a --workdir=work src/ctrlseq.vhd
 
-work/ringcounter.o: ringcounter.vhd
+work/ringcounter.o: src/ringcounter.vhd
 	@echo Analyzing ringcounter.vhd
-	$(CC) -a --workdir=work ringcounter.vhd
+	$(CC) -a --workdir=work src/ringcounter.vhd
 
-work/sap1.o: sap1.vhd          
+work/sap1.o: src/sap1.vhd          
 	@echo Analyzing sap1.vhd
-	$(CC) -a --workdir=work sap1.vhd 
+	$(CC) -a --workdir=work src/sap1.vhd 
 
-work/sap1_tb.o: sap1_tb.vhd
+work/sap1_tb.o: src/sap1_tb.vhd
 	@echo Analyzing sap1_tb.vhd
-	$(CC) -a --workdir=work sap1_tb.vhd 
+	$(CC) -a --workdir=work src/sap1_tb.vhd 
 
 sap1_tb: work/sap1_tb.o work/sap1.o work/accumulator.o work/addsub.o work/pc.o work/regb.o work/regout.o work/mar.o work/ram.o work/ir.o work/ctrlseq.o work/ringcounter.o         
 	@echo Elaborating sap1_tb
