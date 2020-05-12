@@ -46,7 +46,7 @@ implementado.
 
 ## Linux e GHDL
 
-Se você estiver no Linux, certifique-se de ter o programa *ghdl* instalado e
+Se você estiver no Linux, certifique-se de ter o programas *ghdl* e *git* instalados e
 execute
 
 ```

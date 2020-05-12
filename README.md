@@ -41,7 +41,7 @@ to **input of data** mode, which was not implemented.
 
 ## Linux and GHDL
 
-If you are in linux be sure to have the program *ghdl* installed and run
+If you are in linux be sure to have the programs *ghdl* and *git* installed and run
 
 ```bash
 git clone https://github.com/waldeir/SAP-1
