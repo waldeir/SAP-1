@@ -1,6 +1,6 @@
 .PHONY: all
 
-all: work/sap1_tb.o work/sap.o work/accumulator.o work/addsub.o work/pc.o work/regb.o work/regout.o work/mar.o work/ram.o work/ir.o work/ctrlseq.o work/ringcounter.o sap1_tb     
+all: work/sap1_tb.o work/sap1.o work/accumulator.o work/addsub.o work/pc.o work/regb.o work/regout.o work/mar.o work/ram.o work/ir.o work/ctrlseq.o work/ringcounter.o sap1_tb     
 
 
 CC = ghdl
@@ -45,7 +45,7 @@ work/ringcounter.o: ringcounter.vhd
 	@echo Analyzing ringcounter.vhd
 	$(CC) -a --workdir=work ringcounter.vhd
 
-work/sap.o: sap1.vhd          
+work/sap1.o: sap1.vhd          
 	@echo Analyzing sap1.vhd
 	$(CC) -a --workdir=work sap1.vhd 
 
