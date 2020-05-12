@@ -71,16 +71,18 @@ constant rom_data: ROM_type:=(
    -- Last address not used
    "000000000000"
   );
-
+  
+signal ringCounter : std_logic_vector(5 downto 0);
+signal rom_addr : integer range 0 to 15;
+ 
 
   component Ring_counter is
     Port ( bar_clk : in  std_logic;
            bar_clr : in  std_logic;
            Q : out  std_logic_vector(5 downto 0));
   end component;
-signal ringCounter : std_logic_vector(5 downto 0);
- 
-signal rom_addrSignal : std_logic_vector (3 downto 0);
+
+
 
 begin
 -- Ring counter instantiation
@@ -89,37 +91,48 @@ RC: Ring_counter port map (bar_clk => clk,
                            Q   => ringCounter);
 
 process (ringCounter)
-  variable rom_addr: std_logic_vector(3 downto 0);
 begin
     case (ringCounter) is
       ----------------Fetch Cycle-----------------------
       -- T1
-      when "000001" => rom_addr := "0000";   -- 0H
-
+      when "000001" => -- rom_addr <= "0000";   -- 0H
+         microinstruction <= rom_data(0);
+         rom_addr <= 1;
       ---------------Execution Cycle--------------------
       -- T4
       when "001000" =>
         case (macroinstruction) is
           -- LDA
-          when "0000" => rom_addr := "0011"; -- 3H 
+          when "0000" => -- rom_addr <= "0011"; -- 3H 
+             microinstruction <= rom_data(3);
+             rom_addr <= 4;  -- 4H
           -- ADD
-          when "0001" => rom_addr := "0110"; -- 6H 
+          when "0001" => -- rom_addr <= "0110"; -- 6H 
+             microinstruction <= rom_data(6);
+             rom_addr <= 7;  -- 7H
           -- SUB
-          when "0010" => rom_addr := "1001"; -- 9H 
+          when "0010" => -- rom_addr <= "1001"; -- 9H 
+             microinstruction <= rom_data(9);
+             rom_addr <= 10;  -- AH
           -- OUT
-          when "1110" => rom_addr := "1100"; -- CH
+          when "1110" => -- rom_addr <= "1100"; -- CH
+             microinstruction <= rom_data(12);
+             rom_addr <= 13;  -- DH
           -- HLT
           when others => HLT <= '1';
         end case;
       
-      when others   => null;
+      when others   => 
+        microinstruction <= rom_data(rom_addr);
+        rom_addr <= rom_addr + 1;
     end case;
     
-   microinstruction <= rom_data(to_integer(unsigned(rom_addr)));
-   rom_addr := std_logic_vector(unsigned(rom_addr) + 1);
 
 
 end process;
+
+
+
 end behav;
  
 
