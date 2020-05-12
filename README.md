@@ -1,13 +1,12 @@
 # Simple As Possible computer - 1  (SAP-1)
 
 This is a VHDL implementation of the well known computer SAP-1, described in
-the book
-[Malvino - Digital Computer Electronics - 3rd Edition](https://www.amazon.com/Digital-Computer-Electronics-Albert-Malvino/dp/0028005945).
-It uses behavioral modeling
-to create the blocks of the computer and structural modeling to assemble these
-blocks into a computational unit, **Figure 1**. The signals active states where chosen to
-match the ones described in the book, therefore the same waveforms presented in
-the SAP-1 chapter can be visualized in the simulation.
+the book [Malvino - Digital Computer Electronics - 3rd Edition][book].  It uses
+behavioral modeling to create the blocks of the computer and structural
+modeling to assemble these blocks into a computational unit, **Figure 1**. The
+signals active states where chosen to match the ones described in the book,
+therefore the same waveforms presented in the SAP-1 chapter can be visualized
+in the simulation.
 
 ![](images/block_diagram_sap1.png)
 
@@ -19,12 +18,11 @@ Beside each signal, there is their name implemented in the VHDL code.
 The aim of this implementation was to provide a way to see the internal
 signals, **Figure 1**, of SAP-1, during a computer run. The blocks of the
 computer where implemented with the same inputs and outputs as specified in
-[Malvino - Digital Computer Electronics - 3rd
-Edition](https://www.amazon.com/Digital-Computer-Electronics-Albert-Malvino/dp/0028005945),
-except the Controller Sequencer, which does not have the outputs `clr`,
-`bar_clr`, `clk` and `bar_clk`, but instead has a `clk` input. As shown in
-**Figure 2**, these signals are provided from the outside of the SAP-1 block
-and are distributed to the corresponding units.
+[Malvino - Digital Computer Electronics - 3rd Edition][book], except the
+Controller Sequencer, which does not have the outputs `clr`, `bar_clr`, `clk`
+and `bar_clk`, but instead has a `clk` input. As shown in **Figure 2**, these
+signals are provided from the outside of the SAP-1 block and are distributed to
+the corresponding units.
 
 ![](images/sap1_top_level.png)
 
@@ -56,3 +54,4 @@ a program like *gtkwave*. The names of signal variables are presented in
 `waveform.vcd`.
 
 
+[book]:https://www.amazon.com/Digital-Computer-Electronics-Albert-Malvino/dp/0028005945 "https://www.amazon.com/Digital-Computer-Electronics-Albert-Malvino/dp/0028005945"
