@@ -26,15 +26,16 @@ begin
     begin
   --if (falling_edge(bar_clk)) then
   if (bar_clk = '0') then
-	    if (ep = '1' and cp = '0') then
-	        w_bus <= std_logic_vector(counter);
-	    elsif (ep = '0' and cp = '0') then
-          w_bus <= "ZZZZ";
+      if (ep = '1' and cp = '0') then
+          w_bus <= std_logic_vector(counter);
       elsif (ep = '1' and cp = '1') then
-	    -- Undefined w_bus if ep = '1' and cp = '1'
-	        w_bus <= "XXXX";	    
-	    end if;
-	end if;
+          w_bus <= "ZZZZ";	    
+      end if;
+  else
+      if (ep = '0' and cp = '0') then
+          w_bus <= "ZZZZ";
+      end if;
+  end if;
 
 
     end process pc_Operation;
