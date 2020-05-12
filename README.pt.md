@@ -12,7 +12,8 @@ podem ser visualizadas na simulação.
 
 ![](images/block_diagram_sap1.png)
 
-**Figura 1**: Modelo estrutural do SAP1, onde cada bloco usa modelagem comportamental. Ao lado de cada sinal, há seu nome implementado no código VHDL.
+**Figura 1**: Modelo estrutural do SAP1, onde cada bloco usa modelagem
+comportamental. Ao lado de cada sinal, há seu nome implementado no código VHDL.
 
 ## Particularidades desta implementação
 
