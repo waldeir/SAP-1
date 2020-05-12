@@ -15,7 +15,7 @@ Beside each signal, there is their name implemented in the VHDL code.
 
 ## Particularities of this implementation
 
-The aim of this implementation was to provide a way to see the internal
+The aim of this implementation is to provide a way to see the internal
 signals, **Figure 1**, of SAP-1, during a computer run. The blocks of the
 computer where implemented with the same inputs and outputs as specified in
 [Malvino - Digital Computer Electronics - 3rd Edition][book], except the
