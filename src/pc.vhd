@@ -5,11 +5,12 @@ use IEEE.numeric_std.ALL;
 entity pc is
 	port (
 	-- The output port to W bus
-	w_bus   : out std_logic_vector ( 3 downto 0); --:= "ZZZZ";
+	w_bus   : out std_logic_vector ( 3 downto 0);
 	-- Outputs the counter value to w_bus
 	ep      : in  std_logic;
 	-- Increment program counter by 1
 	cp      : in std_logic;
+	-- Clock signal
 	bar_clk : in std_logic;
 	-- Reset counter to 0000 asynchronously
 	bar_clr     : in std_logic
@@ -18,45 +19,42 @@ end entity pc;
 
 
 
-architecture behav of pc is
 
-    signal counter: unsigned(3 downto 0)  := "0000"; -- Internal signal to store counter
+architecture structure of pc is
+
+component jk_ff is
+	port(
+  j        : in std_logic;
+  k        : in std_logic;
+  bar_clk  : in std_logic;
+  bar_clr  : in std_logic;
+  q        : inout std_logic;
+  bar_q    : inout std_logic
+      );
+end component jk_ff;
+
+signal counter: std_logic_vector(3 downto 0); -- Internal signal to store counter value
+signal ff_clk: std_logic_vector(4 downto 0); -- Clock input for each flipflop, position 4 is not used
+ 
+
 begin
-    pc_Operation: process(bar_clk, ep, cp)
-    begin
-  --if (falling_edge(bar_clk)) then
-  if (bar_clk = '0') then
-      if (ep = '1' and cp = '0') then
-          w_bus <= std_logic_vector(counter);
-      elsif (ep = '1' and cp = '1') then
-          w_bus <= "ZZZZ";	    
-      end if;
-  else
-      if (ep = '0' and cp = '0') then
-          w_bus <= "ZZZZ";
-      end if;
-  end if;
+    
+ff_clk(0) <= bar_clk;
 
+counter_ffs: for h in 0 to 3 generate 
+		jk_instance: jk_ff port map(
+			j => cp,
+			k => cp,
+			bar_clk => ff_clk(h),
+			bar_clr => bar_clr,
+			q => counter(h)
+      --bar_q is not used, see fig. 10-12 from Malvino - Digital Computer Electronics 3rd - Edition
+  		);
+      ff_clk(h+1) <= counter(h);
+ end generate counter_ffs;
 
-    end process pc_Operation;
+w_bus <= counter when (ep = '1') else (others => 'Z');
+    
 
-IncrCounter: process (bar_clk, bar_clr)
-begin
-  if (falling_edge(bar_clk)) then
-    if (ep = '0' and cp = '1')  then
-      counter <= counter + 1;
-      w_bus <= "ZZZZ"; -- TODO: Is this line really necessary?
-    end if;
-
-    -- Reset the counter
-    if (bar_clr = '0') then
-      counter <= "0000";
-      w_bus <= "ZZZZ";
-    end if;
-  end if;
-  
-end process;
-		    
-
-end behav;
+end structure;
 
