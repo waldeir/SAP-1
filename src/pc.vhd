@@ -5,7 +5,7 @@ use IEEE.numeric_std.ALL;
 entity pc is
 	port (
 	-- The output port to W bus
-	w_bus   : out std_logic_vector ( 3 downto 0) := "ZZZZ";
+	w_bus   : out std_logic_vector ( 3 downto 0); --:= "ZZZZ";
 	-- Outputs the counter value to w_bus
 	ep      : in  std_logic;
 	-- Increment program counter by 1
@@ -20,7 +20,7 @@ end entity pc;
 
 architecture behav of pc is
 
-    signal counter: unsigned(3 downto 0) := "0000"; -- Internal signal to store counter
+    signal counter: unsigned(3 downto 0)  := "0000"; -- Internal signal to store counter
 begin
     pc_Operation: process(bar_clk, ep, cp)
     begin
@@ -51,6 +51,7 @@ begin
     -- Reset the counter
     if (bar_clr = '0') then
       counter <= "0000";
+      w_bus <= "ZZZZ";
     end if;
   end if;
   

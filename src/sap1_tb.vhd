@@ -33,6 +33,10 @@ signal bar_CLR : std_logic := '1';
 
 constant CLK_period : time := 10 ns;
 
+signal stop : std_logic := '0';
+
+signal delayEnable: std_logic := '1';
+
 begin
 -- Component instantiation
 sap: sap1 port map(
@@ -55,11 +59,33 @@ begin
 	wait for CLK_period/2;
   simTime := simTime + CLK_period;
 	if (HLT = '1') then
---	if (simTime = 190 ns) then
+		stop <= '1';
 		report "Finished";
 		wait;		
 	end if;
 end process clk_process;
+
+process 
+begin
+	if delayEnable = '1' then
+		CLR <= '1';	
+		bar_CLR <= '0';
+		delayEnable <= '0';
+		report "There";
+		wait for 30 ns;
+	end if; 
+
+	CLR <= '0';
+	bar_CLR <= '1';
+	wait for 1 ns;
+
+	if stop = '1' then
+		wait;
+	end if;
+	-- wait;
+
+end process;
+
 
 end behav;
 

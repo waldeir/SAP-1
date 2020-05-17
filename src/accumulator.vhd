@@ -12,7 +12,7 @@
     -- Clock signal
     clk    : in std_logic;
     -- The input and output port to W bus	
-    w_bus  : inout std_logic_vector (7 downto 0):= "ZZZZZZZZ";
+    w_bus  : inout std_logic_vector (7 downto 0); -- := "ZZZZZZZZ";
     -- The output to the addsub
     out_to_addsub: out std_logic_vector (7 downto 0)
     );
@@ -23,7 +23,7 @@
   signal accRegister: std_logic_vector ( 7 downto 0);	
 
   begin
-    acc: process(clk, ea, bar_la, w_bus)
+    acc: process(clk, ea, bar_la)
       begin 
         --if (rising_edge(clk)) then
         if (clk = '1') then

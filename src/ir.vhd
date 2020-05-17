@@ -15,7 +15,7 @@ entity ir is
     -- Send to controller sequencer an instruction code
     out_to_conseq: out std_logic_vector(3 downto 0);
     -- Send and receive data from W bus
-    w_bus  : inout std_logic_vector(7 downto 0):="ZZZZZZZZ" 
+    w_bus  : inout std_logic_vector(7 downto 0) -- :="ZZZZZZZZ" 
   );
 end entity ir;
 
