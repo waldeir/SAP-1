@@ -52,7 +52,7 @@ execute
 ```
 git clone https://github.com/waldeir/SAP-1
 cd SAP-1 /
-faço
+make
 ./sap1_tb --vcd = waveform.vcd
 ```
 
