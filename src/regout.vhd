@@ -19,15 +19,19 @@ end entity regout;
 
 architecture behav of regout is
 
+signal tempReg : std_logic_vector (7 downto 0) := (others => '0');
+
 begin
-  regisOut: process(clk,bar_lo, w_bus)
+  regisOut: process(clk)
   begin
-  -- if (rising_edge(clk)) then
-    if (bar_lo = '0') then
-      sap_out <= w_bus;
+    if (rising_edge(clk)) then
+      if (bar_lo = '0') then
+        tempReg <= w_bus;
+      end if;
     end if;
-  -- end if;
   end process regisOut;
+
+  sap_out <= tempReg;
 
 end behav;
  

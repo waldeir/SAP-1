@@ -20,15 +20,19 @@ end entity regb;
 
 architecture behav of regb is
 
+signal tempReg : std_logic_vector (7 downto 0) := (others => '0');
+
 begin
-  regisB: process(clk, w_bus)
+  regisB: process(clk)
   begin
-  if (rising_edge(clk)) then
-    if (bar_lb = '0') then
-      out_to_addsub <= w_bus;
+    if (rising_edge(clk)) then
+      if (bar_lb = '0') then
+        tempReg <= w_bus;
+      end if;
     end if;
-  end if;
   end process regisB;
+
+  out_to_addsub <= tempReg;
 
 end behav;
 

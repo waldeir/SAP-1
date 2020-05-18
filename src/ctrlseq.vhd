@@ -73,7 +73,7 @@ constant rom_data: ROM_type:=(
   );
   
 signal t_state: std_logic_vector(5 downto 0);
-signal rom_addr : integer range 0 to 15;
+signal rom_addr : integer range 0 to 15 := 0 ;
  
 
   component Ring_counter is
@@ -87,7 +87,7 @@ signal rom_addr : integer range 0 to 15;
 begin
 -- Ring counter instantiation
 ring_counter0: ring_counter port map (bar_clk => clk,
-                           bar_clr => bar_clr,  -- TODO rever esse CLR
+                           bar_clr => bar_clr,
                            t_state   => t_state);
 
 process (t_state)
@@ -95,43 +95,31 @@ begin
     case (t_state) is
       ----------------Fetch Cycle-----------------------
       -- T1
-      when "000001" => -- rom_addr <= "0000";   -- 0H
-         microinstruction <= rom_data(0);
-         rom_addr <= 1;
+      when "000001" => rom_addr <= 0;   -- 0H
+
       ---------------Execution Cycle--------------------
       -- T4
       when "001000" =>
         case (macroinstruction) is
           -- LDA
-          when "0000" => -- rom_addr <= "0011"; -- 3H 
-             microinstruction <= rom_data(3);
-             rom_addr <= 4;  -- 4H
+          when "0000" => rom_addr <= 3; -- 3H 
           -- ADD
-          when "0001" => -- rom_addr <= "0110"; -- 6H 
-             microinstruction <= rom_data(6);
-             rom_addr <= 7;  -- 7H
+          when "0001" => rom_addr <= 6; -- 6H 
           -- SUB
-          when "0010" => -- rom_addr <= "1001"; -- 9H 
-             microinstruction <= rom_data(9);
-             rom_addr <= 10;  -- AH
+          when "0010" => rom_addr <= 9; -- 9H 
           -- OUT
-          when "1110" => -- rom_addr <= "1100"; -- CH
-             microinstruction <= rom_data(12);
-             rom_addr <= 13;  -- DH
+          when "1110" => rom_addr <= 12; -- CH
           -- HLT
           when others => HLT <= '1';
         end case;
       
       when others   => 
-        microinstruction <= rom_data(rom_addr);
         rom_addr <= rom_addr + 1;
     end case;
-    
-
 
 end process;
 
-
+microinstruction <= rom_data(rom_addr);
 
 end behav;
  

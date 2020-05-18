@@ -15,43 +15,31 @@ entity ir is
     -- Send to controller sequencer an instruction code
     out_to_conseq: out std_logic_vector(3 downto 0);
     -- Send and receive data from W bus
-    w_bus  : inout std_logic_vector(7 downto 0) -- :="ZZZZZZZZ" 
+    w_bus  : inout std_logic_vector(7 downto 0)
   );
 end entity ir;
 
 
 architecture behav of ir is
--- TODO usar apenas um registrador para tudo
-signal WbusBuffer : std_logic_vector(7 downto 0);
+
+signal irReg: std_logic_vector(7 downto 0) := (others => '0');
 
 begin
-  irProcess: process(clk,clr,w_bus)
+  irProcess: process(clk,clr)
   begin
-    -- if (rising_edge(clk)) then
-    if (clk = '1') then
-      if (bar_li = '0' and bar_ei = '1' ) then
-        WbusBuffer     <= w_bus;
-        out_to_conseq  <= w_bus(7 downto 4);
-      elsif (bar_li = '1' and bar_ei = '0') then
-        w_bus(7 downto 4) <= "ZZZZ";
-        w_bus(3 downto 0) <= WbusBuffer(3 downto 0);
-        out_to_conseq  <= WbusBuffer(7 downto 4);
-      elsif (bar_li = '1' and bar_ei = '1') then
-        w_bus <= "ZZZZZZZZ";
-      else
-        -- Never enable bar_li and bar_ei at the same time
-        w_bus <= "XXXXXXXX";
-      end if;
-    else
-      w_bus <= "ZZZZZZZZ";      
-    end if;
-
     if (clr = '1') then
-     WbusBuffer <="00000000";
-     w_bus <="ZZZZZZZZ";
+     irReg <= (others => '0');
+
+    elsif (rising_edge(clk)) then
+      if (bar_li = '0') then
+        irReg <= w_bus;
+      end if;
     end if;
 
   end process irProcess;
+
+  out_to_conseq  <= irReg(7 downto 4);
+  w_bus(3 downto 0) <= irReg(3 downto 0) when bar_ei = '0' else (others => 'Z');
 
 end behav;
 

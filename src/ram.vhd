@@ -39,17 +39,19 @@ constant ram_data: ram_type:=(
   ); 
 
 
+signal tempReg : std_logic_vector (7 downto 0) := (others => '0');
+
 begin
   retrContent: process(bar_ce)
   begin
-    --if (rising_edge(CLK)) then
       if (bar_ce = '0') then
-        w_bus <= ram_data(to_integer(unsigned(in_from_mar)));
+        tempReg <= ram_data(to_integer(unsigned(in_from_mar)));
       else
-        w_bus <= "ZZZZZZZZ";
+        tempReg <= "ZZZZZZZZ";
       end if;
-    --end if;
   end process retrContent;
+
+w_bus <= tempReg;
 
 end behav;
 

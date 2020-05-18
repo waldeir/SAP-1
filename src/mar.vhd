@@ -19,18 +19,19 @@ end entity mar;
 
 architecture behav of mar is
 
-  
+signal tempReg : std_logic_vector (3 downto 0) := (others => '0');
 
 begin
-  memReg:process(clk,w_bus)
+  memReg:process(clk)
   begin
-    --if (rising_edge(clk)) then
-    if (clk = '1') then
+    if (rising_edge(clk)) then
       if (bar_lm = '0') then
-        out_to_ram <= w_bus;
+        tempReg <= w_bus;
       end if;
     end if; 
   end process memReg;
+
+  out_to_ram <= tempReg;
 
 end behav;
 

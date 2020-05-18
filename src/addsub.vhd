@@ -23,18 +23,21 @@ end entity addsub;
 architecture behav of addsub is
 
 begin
-    addsubCalc: process(eu, su)
-    begin
-        if (eu='1' and su = '0') then
-	    w_bus <= std_logic_vector(unsigned(in_from_acc) + unsigned(in_from_bReg));
-        elsif (eu = '1' and su ='1' ) then
-	    w_bus <= std_logic_vector(unsigned(in_from_acc) - unsigned(in_from_bReg));
-        elsif (eu = '0' and su = '0') then
-	    w_bus <= "ZZZZZZZZ";
-        else
-	    -- Never use su = 1 and eu = 0
-	    w_bus <= "XXXXXXXX";
-        end if;
-     end process addsubCalc;
+--    addsubCalc: process(eu, su)
+--    begin
+--        if (eu='1' and su = '0') then
+--	    w_bus <= std_logic_vector(unsigned(in_from_acc) + unsigned(in_from_bReg));
+--        elsif (eu = '1' and su ='1' ) then
+--	    w_bus <= std_logic_vector(unsigned(in_from_acc) - unsigned(in_from_bReg));
+--        else
+--	    w_bus <= "ZZZZZZZZ";
+--        end if;
+--    end process addsubCalc;
+
+    w_bus <= std_logic_vector(unsigned(in_from_acc) + unsigned(in_from_bReg))
+             when eu='1' and su = '0'
+             else 
+             std_logic_vector(unsigned(in_from_acc) - unsigned(in_from_bReg))
+             when eu = '1' and su ='1' else (others => 'Z');
 end behav;
 
