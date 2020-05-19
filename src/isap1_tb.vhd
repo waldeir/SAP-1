@@ -1,0 +1,327 @@
+library IEEE;
+use IEEE.std_logic_1164.ALL;
+use IEEE.numeric_std.ALL;
+
+-- sap1 testbench
+entity isap1_tb is
+end entity isap1_tb;
+
+
+architecture behav of isap1_tb is
+
+-- Component declaration
+
+component isap1 is
+	port (
+  -- Clock
+  in_CLK  : in std_logic;
+  -- Output of the results
+  sap_out : out std_logic_vector(7 downto 0);
+  -- Input memory address from switch
+  s1      : in std_logic_vector (3 downto 0);
+  -- run/prog 1/0
+  s2      : in std_logic;
+  -- Input data
+  s3      : in std_logic_vector (7 downto 0);
+  -- read/write 1/0
+  s4      : in std_logic;
+  -- start/clear  1/0
+  s5      : in std_logic;
+  -- single step
+  s6      : in std_logic;
+  -- manual/auto  1/0
+  s7      : in std_logic
+	);
+end component isap1;
+
+-- Signals
+
+signal sap_out : std_logic_vector (7 downto 0);
+signal in_CLK : std_logic;
+signal s1 : std_logic_vector (3 downto 0);
+signal s2, s4, s5, s6, s7 : std_logic;
+signal s3 : std_logic_vector (7 downto 0);
+
+
+constant CLK_period : time := 10 ns;
+
+signal stop : std_logic := '0';
+
+
+type RAM_type is array (0 to 15 ) of std_logic_vector(7 downto 0);
+type address_type is array (0 to 15 ) of std_logic_vector(3 downto 0);
+
+signal RAM_prog1 : ram_type := (
+    -- Example program
+   "00001001",  -- LDA 9H
+   "00011010",  -- ADD AH
+   "00011011",  -- ADD BH
+   "00101100",  -- SUB CH
+   "11100000",  -- OUT   
+   "11110000",  -- HLT   
+   "00011010",
+   "00101110",
+   "00111100",
+   "00011010",
+   "00101110",
+   "00111100",
+   "00111111",
+   "00111110",
+   "00111110",   
+   "11110000" 
+  );                          
+
+signal RAM_prog2 : ram_type := (
+    -- Example program
+   "00001001",  -- LDA 9H
+   "11100000",  -- OUT 
+   "11110000",  -- HLT 
+   "00101100",   
+   "11100000",      
+   "11110000",      
+   "00011010",
+   "00101110",
+   "00111100",
+   "00011010",
+   "00101110",
+   "00111100",
+   "00111111",
+   "00111110",
+   "00111110",   
+   "00000000"    
+);                          
+
+signal RAM_prog3 : ram_type := (
+    -- Example program
+   "00001001",  -- LDA 9H
+   "00101010",  -- SUB AH
+   "00011011",  -- ADD BH
+   "00101100",  -- SUB CH
+   "00011111",  -- ADD FH
+   "11100000",  -- OUT 
+   "11110000",  -- HLT 
+   "00101110",
+   "00111100",
+   "10011110",
+   "00111110",
+   "00001100",
+   "10000001",
+   "00101100",
+   "00110110",   
+   "00000001"    
+);                          
+
+signal RAM_adresses : address_type := (
+   "0000",  
+   "0001",  
+   "0010",  
+   "0011",  
+   "0100",  
+   "0101",  
+   "0110",
+   "0111",
+   "1000",
+   "1001",
+   "1010",
+   "1011",
+   "1100",
+   "1101",
+   "1110",   
+   "1111" 
+);
+
+ 
+
+
+
+begin
+-- Component instantiation
+sap: isap1 port map(
+      in_CLK     => in_CLK,
+      sap_out => sap_out,
+      -- Input memory address from switch
+      s1 => s1,
+      -- run/prog 1/0
+      s2 => s2,
+      -- Input data
+      s3 => s3,
+      -- read/write 1/0
+      s4 => s4,
+      -- start/clear  1/0
+      s5 => s5,
+      -- single step
+      s6 => s6,
+      -- manual/auto  1/0
+      s7 => s7
+      );
+
+clk_process : process
+begin
+  in_CLK <= '1';
+	wait for CLK_period/2;
+	in_CLK <= '0';
+	wait for CLK_period/2;
+  if stop = '1' then
+    report "Finished";
+    wait;
+  end if;
+end process clk_process;
+
+process 
+begin
+
+-- single step
+s6 <= '0';
+-- read/write 1/0
+s4 <= '1';
+-- manual/auto 1/0
+s7 <= '0';
+
+
+---------------------
+--  Record to RAM  --
+---------------------
+
+-- run/prog 1/0
+s2 <= '0';
+-- start/clear 1/0
+s5 <= '0';	
+
+
+report "Recording program 1";
+for i in 0 to 15 loop
+  -- Input memory address
+  s1 <= RAM_adresses(i);
+  -- Input data
+  s3 <= RAM_prog1(i);
+  wait for 1 ns;
+  
+  -- Pulse to write
+
+  -- read/write 1/0
+  s4 <= '0';
+  wait for 1 ns;
+  -- read/write 1/0
+  s4 <= '1';
+  wait for 1 ns;
+
+end loop;
+
+
+------------------------
+--  Starting program  --
+------------------------
+
+report "Starting program";
+
+ -- run/prog 1/0
+s2 <= '1';
+wait for 10 ns;
+
+-- start/clear 1/0
+s5 <= '1';	
+
+wait for 500 ns;
+
+---------------------
+--  Record to RAM  --
+---------------------
+
+-- run/prog 1/0
+s2 <= '0';
+-- start/clear 1/0
+s5 <= '0';	
+
+
+report "Recording program 1";
+for i in 0 to 15 loop
+  -- Input memory address
+  s1 <= RAM_adresses(i);
+  -- Input data
+  s3 <= RAM_prog2(i);
+  wait for 1 ns;
+  
+  -- Pulse to write
+
+  -- read/write 1/0
+  s4 <= '0';
+  wait for 1 ns;
+  -- read/write 1/0
+  s4 <= '1';
+  wait for 1 ns;
+
+end loop;
+
+
+------------------------
+--  Starting program  --
+------------------------
+
+report "Starting program";
+
+ -- run/prog 1/0
+s2 <= '1';
+wait for 10 ns;
+
+-- start/clear 1/0
+s5 <= '1';	
+
+wait for 500 ns;
+
+
+ 
+
+---------------------
+--  Record to RAM  --
+---------------------
+
+-- run/prog 1/0
+s2 <= '0';
+-- start/clear 1/0
+s5 <= '0';	
+
+
+report "Recording program 1";
+for i in 0 to 15 loop
+  -- Input memory address
+  s1 <= RAM_adresses(i);
+  -- Input data
+  s3 <= RAM_prog3(i);
+  wait for 1 ns;
+  
+  -- Pulse to write
+
+  -- read/write 1/0
+  s4 <= '0';
+  wait for 1 ns;
+  -- read/write 1/0
+  s4 <= '1';
+  wait for 1 ns;
+
+end loop;
+
+
+------------------------
+--  Starting program  --
+------------------------
+
+report "Starting program";
+
+ -- run/prog 1/0
+s2 <= '1';
+wait for 10 ns;
+
+-- start/clear 1/0
+s5 <= '1';	
+
+wait for 500 ns;
+
+stop <= '1';
+wait;
+ 
+
+end process;
+
+
+end behav;
+
