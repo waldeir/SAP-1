@@ -3,7 +3,7 @@ use IEEE.std_logic_1164.ALL;
 
 entity sap1 is
 	port (
-  HLT     : out std_logic;
+  bar_HLT     : out std_logic;
   CLK     : in std_logic;
   bar_CLK : in std_logic;
   CLR     : in std_logic;
@@ -106,7 +106,7 @@ component ctrlseq is
   -- CLR
   bar_CLR          : in std_logic;
   -- Halt
-  HLT              : out std_logic
+  bar_HLT          : out std_logic
   );
 end component ctrlseq;
 
@@ -160,7 +160,6 @@ end component ram;
 ----------------------------------------
 --  Intermediate signals declaration  --
 ----------------------------------------
-signal macroinstruction : std_logic_vector ( 3 downto 0);
 signal microinstruction : std_logic_vector ( 11 downto 0);
 
 -- Cp     : microinstruction(11)    -
@@ -258,7 +257,7 @@ ctrlseq0 : ctrlseq port map(
                  macroinstruction => ir_ctrlseq_bus,
                  CLK              => CLK,
                  bar_CLR          => bar_CLR,
-                 HLT              => HLT
+                 bar_HLT              => bar_HLT
                  );
 
 

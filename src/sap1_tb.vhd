@@ -13,7 +13,7 @@ architecture behav of sap1_tb is
 
 component sap1 is
 port (
-  HLT     : out std_logic;
+  bar_HLT     : out std_logic;
   CLK     : in std_logic;
   bar_CLK : in std_logic;
   CLR     : in std_logic;
@@ -26,7 +26,7 @@ end component sap1;
 
 signal CLK : std_logic;
 signal bar_CLK : std_logic;
-signal HLT : std_logic;
+signal bar_HLT : std_logic;
 signal sap_out : std_logic_vector (7 downto 0);
 signal CLR : std_logic := '0';
 signal bar_CLR : std_logic := '1';
@@ -42,7 +42,7 @@ begin
 sap: sap1 port map(
       CLK     => CLK,
       bar_CLK => bar_CLK,
-      HLT     => HLT,
+      bar_HLT     => bar_HLT,
       sap_out => sap_out,
       CLR     => CLR,
       bar_CLR => bar_CLR
@@ -58,7 +58,7 @@ begin
 	CLK <= '1';
 	wait for CLK_period/2;
   simTime := simTime + CLK_period;
-	if (HLT = '1') then
+	if (bar_HLT = '0') then
 		stop <= '1';
 		report "Finished";
 		wait;		

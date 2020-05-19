@@ -14,7 +14,7 @@ entity ctrlseq is
   -- CLR
   bar_clr          : in std_logic;
   -- Halt
-  HLT              : out std_logic
+  bar_HLT              : out std_logic
   );
 end entity ctrlseq;
 
@@ -110,7 +110,7 @@ begin
           -- OUT
           when "1110" => rom_addr <= 12; -- CH
           -- HLT
-          when others => HLT <= '1';
+          when others => bar_HLT <= '0';
         end case;
       
       when others   => 
