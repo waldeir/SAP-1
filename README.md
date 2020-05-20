@@ -38,6 +38,26 @@ Although the signals `clr` and `bar_clr` appear in the block diagrams, they
 remain disabled throughout the simulation, because they are only used to switch
 to **input of data** mode, which was not implemented.
 
+### Data Input
+
+The **Figure 3** shows the implementation of the  input and data on SAP-1. In order to compile this version run:
+
+
+![](images/isap1_block_diagram.png)
+
+**Figure 3**: Block diagram of SAP-1 with data entries. 
+
+```bash
+make isap1_tb
+./isap1_tb --vcd=waveform.vcd
+```
+
+The *testbench* `isap1_tb.vhd` uses the input switches of SAP-1, shown in **Figure 4**, to load and run three differente programs.
+
+
+![](images/isap1_top_level.png)
+
+**Figure 4**: SAP-1 with its input switches.
 
 ## Linux and GHDL
 
