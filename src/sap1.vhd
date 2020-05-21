@@ -3,11 +3,9 @@ use IEEE.std_logic_1164.ALL;
 
 entity sap1 is
 	port (
-  bar_hlt : out std_logic;
-  clk     : in std_logic;
-  bar_clk : in std_logic;
-  clr     : in std_logic;
-  bar_clr : in std_logic;
+  in_clk     : in std_logic;
+  -- start/clear 1/0
+  s5      : in std_logic;
   sap_out : out std_logic_vector(7 downto 0)
 	);
 end entity sap1;
@@ -185,7 +183,19 @@ signal acc_addsub_bus : std_logic_vector ( 7 downto 0);
 signal regb_addsub_bus   : std_logic_vector ( 7 downto 0);
 signal ir_ctrlseq_bus : std_logic_vector ( 3 downto 0);
 
+signal clk, bar_clk, bar_clr, clr , bar_hlt: std_logic;
+
 begin
+
+-- s5 start/clear 1/0
+clr <= '1' when s5 = '0' else '0';
+bar_clr <= not clr;
+
+-- stop the clock when bar_hlt is 0
+clk <= in_clk and bar_hlt;
+bar_clk <= not clk;
+
+
 
 ------------------------------
 -- Components instantiation --
