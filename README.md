@@ -96,7 +96,7 @@ Then open the file `waveform.vcd` with a wave viewer program like [gtkwave][gtkw
 
 ![](images/sap1_top_level.png)
 
-**Figure 4**: SAP-1 with its input switches.
+**Figure 4**: SAP-1 With just the start/clear switch.
 
 [gtkwave]:http://gtkwave.sourceforge.net/ "Wave viewer"
 

@@ -101,7 +101,7 @@ Em seguida, abra o arquivo `waveform.vcd` com um programa visualizador de ondas 
 
 ![](images/sap1_top_level.png)
 
-**Figura 4**: SAP-1 com seus comutadores de entrada.
+**Figura 4**: SAP-1 apenas com o *switch* start/clear.
 
 [gtkwave]:http://gtkwave.sourceforge.net/ "Visualizador de ondas"
 
