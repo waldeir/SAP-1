@@ -37,12 +37,12 @@ the clock must be manually provided by pressing `s6` repeatedly.
 | Switch        | Function      | 
 |:-------------:|---------------| 
 | `s1`          | Memory Address| 
-| `s2`          | '1' (run): Connects the MAR input to the W bus/'0' (program): Connects the MAR input to `s1`|
+| `s2`          | '1' (run): Connects the MAR input to the W bus - '0' (program): Connects the MAR input to `s1`|
 | `s3`          | Input of data | 
-| `s4`          | '1' (read): Memory is ready be read by the SAP-1/'0' (write): write to the RAM the content of `s3` in the address specified by `s1` | 
-| `s5`          | '1' (start): Puts `clr` and `bar_clr` signals to the inactive states, starting the computer/0 (clear): Resets the PC to 0 and the Ring Counter to the T1 state| 
+| `s4`          | '1' (read): Memory is ready be read by the SAP-1 - '0' (write): write to the RAM the content of `s3` in the address specified by `s1` | 
+| `s5`          | '1' (start): Puts `clr` and `bar_clr` signals to the inactive states, starting the computer - 0 (clear): Resets the Program Counter to 0, the Ring Counter to the T1 state and Instruction Register to '00000000' | 
 | `s6`          | Single step | 
-| `s7`          | '1' (manual): Clock is provided by successively pushing `s6`/'0' (auto): clock is reade from `in_clk`| 
+| `s7`          | '1' (manual): Clock is provided by successively pushing `s6` - '0' (auto): clock is read from `in_clk`| 
 
 
 

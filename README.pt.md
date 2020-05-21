@@ -38,14 +38,14 @@ pressionando `s6` repetidamente.
 **Tabela 1**: Switches SAP-1
 
 | Switch | Função |
-|: -------------: | --------------- |
-| `s1` Endereço de memória |
-| `s2` '1' (run): conecta a entrada MAR ao barramento W / '0' (prog): conecta a entrada MAR ao `s1` |
+|:-------------:| --------------- |
+| `s1` | Endereço de memória |
+| `s2` |'1' (run): conecta a entrada MAR ao barramento W - '0' (prog): conecta a entrada do MAR ao `s1` |
 | `s3` | Entrada de dados |
-| `s4` | '1' (read): a memória está pronta para ser lida pelo SAP-1 / '0' (write): escreva na RAM o conteúdo de `s3` no endereço especificado por` s1` |
-| `s5` '1' (start): Coloca os sinais `clr` e` bar_clr` nos estados inativos, iniciando o computador / 0 (clear): Redefine o PC para 0 e o contador de toques para o estado T1 |
-| `s6` Passo único |
-| `s7` '1' (manual): O relógio é fornecido pressionando sucessivamente `s6` / '0' (auto): o relógio é reade a partir de` in_clk` |
+| `s4` | '1' (read): a memória está pronta para ser lida pelo SAP-1 - '0' (write): escreva na RAM o conteúdo de `s3` no endereço especificado por` s1` |
+| `s5` | '1' (start): Coloca os sinais `clr` e` bar_clr` nos estados inativos, iniciando o computador - 0 (clear): Redefine o Contador de Programa para 0, o Contador em Anel  para o estado T1 e o Registrador de Instrução para '00000000' |
+| `s6` | Passo único |
+| `s7` | '1' (manual): O clock é fornecido pressionando-se sucessivamente `s6` - '0' (auto): o clock é lido a partir de `in_clk` |
 
 
 
@@ -108,3 +108,5 @@ Em seguida, abra o arquivo `waveform.vcd` com um programa visualizador de ondas 
 [livro]:https://www.amazon.com/Digital-Computer-Electronics-Albert-Malvino/dp/0028005945 "https://www.amazon.com/Digital-Computer-Electronics-Albert-Malvino/dp/ 0028005945 "
 
 [ghdl]:http://ghdl.free.fr/ "simulador VHDL"
+
+
