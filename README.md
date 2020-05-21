@@ -3,77 +3,103 @@ Language: [Portuguese](https://github.com/waldeir/SAP-1/blob/master/README.pt.md
 # Simple As Possible computer - 1  (SAP-1)
 
 This is a VHDL implementation of the well known computer SAP-1, described in
-the book [Malvino - Digital Computer Electronics - 3rd Edition][book].  It uses
-behavioral modeling to create the blocks of the computer and structural
-modeling to assemble these blocks into a computational unit, **Figure 1**. The
-signals active states where chosen to match the ones described in the book,
-therefore the same waveforms presented in the SAP-1 chapter can be visualized
-in the simulation.
-
-![](images/block_diagram_sap1.png)
-
-**Figure 1**: Structural model of SAP1, where each block uses behavioral modelling.
-Beside each signal, there is their name implemented in the VHDL code.
-
-## Particularities of this implementation
-
-The aim of this implementation is to provide a way to see the internal
-signals, **Figure 1**, of SAP-1, during a computer run. The blocks of the
-computer where implemented with the same inputs and outputs as specified in
-[Malvino - Digital Computer Electronics - 3rd Edition][book], except the
-Controller Sequencer, which does not have the outputs `clr`, `bar_clr`, `clk`
-and `bar_clk`, but instead has a `clk` input. As shown in **Figure 2**, these
-signals are provided from the outside of the SAP-1 block and are distributed to
-the corresponding units.
-
-![](images/sap1_top_level.png)
-
-**Figure 2**: Inputs and outputs of this SAP-1 implementation.
-
-The **input of data** through *Memory Address Register* (MAR) was not implemented, but you
-can program the computer directly writing in the file `RAM.vhd` and simulate
-the result with the provided *testbench*, which is the file `sap1_tb.vhd`.
-
-Although the signals `clr` and `bar_clr` appear in the block diagrams, they
-remain disabled throughout the simulation, because they are only used to switch
-to **input of data** mode, which was not implemented.
-
-### Data Input
-
-The **Figure 3** shows the implementation of the  input and data on SAP-1. In order to compile this version run:
+the book [Malvino - Digital Computer Electronics - 3rd Edition][book]. The **Figure
+1** shows the block diagram of the computational unit, where the active states of the signals 
+where chosen to match the ones described in the book. Therefore the same
+waveforms presented in the SAP-1 chapter can be visualized in the simulation.
 
 
 ![](images/isap1_block_diagram.png)
 
-**Figure 3**: Block diagram of SAP-1 with data entries. 
+**Figure 1**: Block diagram of SAP-1 with data entries. 
+Beside each signal, there is how its name is referred into the VHDL code.
 
-```bash
-make isap1_tb
-./isap1_tb --vcd=waveform.vcd
-```
+As shown in **Figure 2**, the computer has eight inputs: the switches `s1` to
+`s7`, described in **Table 1**, and the clock input `in_clk`. The program is loaded into
+the 16 bit RAM memory before the computer run, using the switches `s1`, `s3`
+and `s4`. While `s5` is set to 0 (clear) and `s2` is set to 0 (prog), data and
+its destination address are fed respectively to `s3` and `s1` and a pulse in
+`s4` is performed to write the information. The operation is repeated until all
+the program is recorded, then `s2` is set to 0 (run), connecting the *Memory Address Register* (MAR) to the
+W bus.
 
-The *testbench* `isap1_tb.vhd` uses the input switches of SAP-1, shown in **Figure 4**, to load and run three differente programs.
+If `s7` is 0 (auto), the program starts when `s5` is 1 (start) and the computer
+will run until it finds the instruction HLT. Otherwise, if `s7` is 1 (manual),
+the clock must be manually provided by pressing `s6` repeatedly.
 
 
 ![](images/isap1_top_level.png)
 
-**Figure 4**: SAP-1 with its input switches.
+**Figure 2**: Inputs and outputs of this SAP-1 implementation.
 
-## Linux and GHDL
+**Table 1**: SAP-1 Switches
 
-If you are in linux be sure to have the programs *ghdl* and *git* installed and run
+| Switch        | Function      | 
+|:-------------:|---------------| 
+| `s1`          | Memory Address| 
+| `s2`          | '1' (run): Connects the MAR input to the W bus/'0' (program): Connects the MAR input to `s1`|
+| `s3`          | Input of data | 
+| `s4`          | '1' (read): Memory is ready be read by the SAP-1/'0' (write): write to the RAM the content of `s3` in the address specified by `s1` | 
+| `s5`          | '1' (start): Puts `clr` and `bar_clr` signals to the inactive states, starting the computer/0 (clear): Resets the PC to 0 and the Ring Counter to the T1 state| 
+| `s6`          | Single step | 
+| `s7`          | '1' (manual): Clock is provided by successively pushing `s6`/'0' (auto): clock is reade from `in_clk`| 
+
+
+
+
+## Simulation with GHDL
+
+The simulation is performed using [GHDL][ghdl].
+Custom programs can be written to the testbench file `isap1_tb.vhd` where they will be loaded to the SAP-1's RAM and then executed. 
+
+If you are in Linux, make sure to have *git*, *make* and  [GHDL][ghdl] installed and run:
 
 ```bash
 git clone https://github.com/waldeir/SAP-1
 cd SAP-1/
 make
-./sap1_tb --vcd=waveform.vcd
+./isap1_tb --vcd=waveform.vcd
 ```
 
 The procedure generates the waveform file `waveform.vcd`, that can be opened in
-a program like *gtkwave*. The names of signal variables are presented in
-**Figure 1**, and their behavior during time are stored in the file
+a program like *gtkwave*. The names of signal variables are presented in the
+**Figures 1** and **2**, and their behavior during time are stored in the file
 `waveform.vcd`.
 
 
+## SAP-1 with no Input switches
+
+This implementation is mainly intended to provide a way to see the internal
+signals of SAP-1 during an execution of a program. Therefore a version with no
+inputs is also provided, where the simulation is performed without the
+recording step. The program is written direct by the user to the RAM file
+`ram.vhd` and the start of the execution is controlled with the `s5` switch.
+
+The **Figure 3** shows the block diagram with the *Memory Address Register*
+(`imar.vhd`) and RAM (`iram.vhd`) replaced by their version with no input,
+`mar.vhd` and `ram.vhd`, respectively. The **Figure 4** presents the resulting
+simplified version of the SAP-1.
+
+In order to run this version check do:
+
+```bash
+make sap1_tb
+./sap1_tb --vcd=waveform.vcd
+```
+
+Then open the file `waveform.vcd` with a wave viewer program like [gtkwave][gtkwave]. 
+
+
+![](images/block_diagram_sap1.png)
+
+**Figure 3**: Structural model of SAP1.
+
+![](images/sap1_top_level.png)
+
+**Figure 4**: SAP-1 with its input switches.
+
+[gtkwave]:http://gtkwave.sourceforge.net/ "Wave viewer"
+
 [book]:https://www.amazon.com/Digital-Computer-Electronics-Albert-Malvino/dp/0028005945 "https://www.amazon.com/Digital-Computer-Electronics-Albert-Malvino/dp/0028005945"
+
+[ghdl]:http://ghdl.free.fr/ "VHDL simulator"
