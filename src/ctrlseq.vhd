@@ -95,6 +95,7 @@ process (t_state, bar_clr)
 begin
   if bar_clr = '0' then
     temp_hlt <= '1';
+    rom_addr <= 0;
   else
     case (t_state) is
       ----------------Fetch Cycle-----------------------
