@@ -212,7 +212,7 @@ end loop;
 --  Starting program  --
 ------------------------
 
-report "Starting program";
+report "Starting program 1";
 
  -- run/prog 1/0
 s2 <= '1';
@@ -233,7 +233,7 @@ s2 <= '0';
 s5 <= '0';	
 
 
-report "Recording program 1";
+report "Recording program 2";
 for i in 0 to 15 loop
   -- Input memory address
   s1 <= RAM_adresses(i);
@@ -257,7 +257,7 @@ end loop;
 --  Starting program  --
 ------------------------
 
-report "Starting program";
+report "Starting program 2";
 
  -- run/prog 1/0
 s2 <= '1';
@@ -281,7 +281,7 @@ s2 <= '0';
 s5 <= '0';	
 
 
-report "Recording program 1";
+report "Recording program 3";
 for i in 0 to 15 loop
   -- Input memory address
   s1 <= RAM_adresses(i);
@@ -305,7 +305,7 @@ end loop;
 --  Starting program  --
 ------------------------
 
-report "Starting program";
+report "Starting program 3";
 
  -- run/prog 1/0
 s2 <= '1';

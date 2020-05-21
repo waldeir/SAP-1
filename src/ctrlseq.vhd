@@ -14,7 +14,7 @@ entity ctrlseq is
   -- CLR
   bar_clr          : in std_logic;
   -- Halt
-  bar_HLT              : out std_logic
+  bar_hlt          : out std_logic 
   );
 end entity ctrlseq;
 
@@ -74,6 +74,7 @@ constant rom_data: ROM_type:=(
   
 signal t_state: std_logic_vector(5 downto 0);
 signal rom_addr : integer range 0 to 15 := 0 ;
+signal temp_hlt : std_logic;
  
 
   component Ring_counter is
@@ -90,8 +91,11 @@ ring_counter0: ring_counter port map (bar_clk => clk,
                            bar_clr => bar_clr,
                            t_state   => t_state);
 
-process (t_state)
+process (t_state, bar_clr)
 begin
+  if bar_clr = '0' then
+    temp_hlt <= '1';
+  else
     case (t_state) is
       ----------------Fetch Cycle-----------------------
       -- T1
@@ -110,16 +114,20 @@ begin
           -- OUT
           when "1110" => rom_addr <= 12; -- CH
           -- HLT
-          when others => bar_HLT <= '0';
+          when "1111" => temp_hlt <= '0';
+          when others => report "Others";
         end case;
       
       when others   => 
         rom_addr <= rom_addr + 1;
     end case;
+  end if;
 
 end process;
 
 microinstruction <= rom_data(rom_addr);
+bar_hlt <= temp_hlt;
+
 
 end behav;
  

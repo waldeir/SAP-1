@@ -221,7 +221,7 @@ bar_CLR <= not CLR;
 -- s6 single step
 -- s7 manual/auto  1/0
 
-CLK <=  (s6 and s7 and bar_HLT) or (in_CLK and not s7);
+CLK <= ((s6 and s7) or (in_CLK and not s7)) and bar_hlt;
 bar_CLK <= not CLK;
 
 
