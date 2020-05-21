@@ -97,7 +97,7 @@ Em seguida, abra o arquivo `waveform.vcd` com um programa visualizador de ondas 
 
 ![](images/block_diagram_sap1.png)
 
-**Figura 3**: Modelo estrutural do SAP1.
+**Figura 3**: Modelo estrutural do SAP-1 sem os *switches* de entrada.
 
 ![](images/sap1_top_level.png)
 
