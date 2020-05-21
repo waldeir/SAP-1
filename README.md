@@ -92,7 +92,7 @@ Then open the file `waveform.vcd` with a wave viewer program like [gtkwave][gtkw
 
 ![](images/block_diagram_sap1.png)
 
-**Figure 3**: Structural model of SAP1.
+**Figure 3**: Structural model of SAP1 without the input switches.
 
 ![](images/sap1_top_level.png)
 
