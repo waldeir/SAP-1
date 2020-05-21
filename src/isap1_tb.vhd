@@ -1,6 +1,7 @@
 library IEEE;
 use IEEE.std_logic_1164.ALL;
 use IEEE.numeric_std.ALL;
+use IEEE.math_real.uniform;
 
 -- sap1 testbench
 entity isap1_tb is
@@ -14,7 +15,7 @@ architecture behav of isap1_tb is
 component isap1 is
 	port (
   -- Clock
-  in_CLK  : in std_logic;
+  in_clk  : in std_logic;
   -- Output of the results
   sap_out : out std_logic_vector(7 downto 0);
   -- Input memory address from switch
@@ -37,13 +38,13 @@ end component isap1;
 -- Signals
 
 signal sap_out : std_logic_vector (7 downto 0);
-signal in_CLK : std_logic;
+signal in_clk : std_logic;
 signal s1 : std_logic_vector (3 downto 0);
 signal s2, s4, s5, s6, s7 : std_logic;
 signal s3 : std_logic_vector (7 downto 0);
 
 
-constant CLK_period : time := 10 ns;
+constant clk_period : time := 10 ns;
 
 signal stop : std_logic := '0';
 
@@ -137,7 +138,7 @@ signal RAM_adresses : address_type := (
 begin
 -- Component instantiation
 sap: isap1 port map(
-      in_CLK     => in_CLK,
+      in_clk     => in_clk,
       sap_out => sap_out,
       -- Input memory address from switch
       s1 => s1,
@@ -157,10 +158,10 @@ sap: isap1 port map(
 
 clk_process : process
 begin
-  in_CLK <= '1';
-	wait for CLK_period/2;
-	in_CLK <= '0';
-	wait for CLK_period/2;
+  in_clk <= '1';
+	wait for clk_period/2;
+	in_clk <= '0';
+	wait for clk_period/2;
   if stop = '1' then
     report "Finished";
     wait;
@@ -168,6 +169,10 @@ begin
 end process clk_process;
 
 process 
+
+variable seed1, seed2: positive := 1;
+variable randomFactor: real;
+
 begin
 
 -- single step
@@ -338,6 +343,76 @@ else
 end if;
 
 
+
+
+
+-------------------------------
+--  Record program 1 to RAM  --
+-------------------------------
+
+-- run/prog 1/0
+s2 <= '0';
+-- start/clear 1/0
+s5 <= '0';	
+
+
+report "Recording program 1";
+for i in 0 to 15 loop
+  -- Input memory address
+  s1 <= RAM_adresses(i);
+  -- Input data
+  s3 <= RAM_prog1(i);
+  wait for 1 ns;
+  
+  -- Pulse to write
+
+  -- read/write 1/0
+  s4 <= '0';
+  wait for 1 ns;
+  -- read/write 1/0
+  s4 <= '1';
+  wait for 1 ns;
+
+end loop;
+
+
+----------------------------------------
+--  Starting program 1 in manual mode --
+----------------------------------------
+
+report "Starting program 1";
+
+
+-- manual/auto 1/0
+s7 <= '1';
+
+ -- run/prog 1/0
+s2 <= '1';
+wait for 10 ns;
+
+-- start/clear 1/0
+s5 <= '1';	
+
+
+-- Clock controled by s6 switch with random steps
+
+for i  in 0 to 35 loop
+  s6 <= '1';
+  uniform (seed1, seed2, randomFactor);
+  wait for 5 ns + 10 ns * randomFactor;
+  s6 <= '0';
+  uniform (seed1, seed2, randomFactor);
+  wait for 5 ns + 10 ns * randomFactor; 
+end loop;
+
+
+
+if sap_out = "01000101" then
+  report "Test passed!";
+else
+  report "Test failed!";
+end if;
+ 
 stop <= '1';
 wait;
  
