@@ -178,9 +178,13 @@ s4 <= '1';
 s7 <= '0';
 
 
----------------------
---  Record to RAM  --
----------------------
+
+
+
+
+-------------------------------
+--  Record program 1 to RAM  --
+-------------------------------
 
 -- run/prog 1/0
 s2 <= '0';
@@ -208,9 +212,9 @@ for i in 0 to 15 loop
 end loop;
 
 
-------------------------
---  Starting program  --
-------------------------
+-------------------------
+--  Starting program 1 --
+-------------------------
 
 report "Starting program 1";
 
@@ -223,9 +227,16 @@ s5 <= '1';
 
 wait for 500 ns;
 
----------------------
---  Record to RAM  --
----------------------
+if sap_out = "01000101" then
+  report "Test passed!";
+else
+  report "Test failed!";
+end if;
+
+
+-------------------------------
+--  Record program 2 to RAM  --
+-------------------------------
 
 -- run/prog 1/0
 s2 <= '0';
@@ -253,9 +264,9 @@ for i in 0 to 15 loop
 end loop;
 
 
-------------------------
---  Starting program  --
-------------------------
+-------------------------
+--  Starting program 2 --
+-------------------------
 
 report "Starting program 2";
 
@@ -268,12 +279,16 @@ s5 <= '1';
 
 wait for 500 ns;
 
+if sap_out = "00011010" then
+  report "Test passed!";
+else
+  report "Test failed";
+end if;
 
- 
 
----------------------
---  Record to RAM  --
----------------------
+-------------------------------
+--  Record program 3 to RAM  --
+-------------------------------
 
 -- run/prog 1/0
 s2 <= '0';
@@ -301,9 +316,9 @@ for i in 0 to 15 loop
 end loop;
 
 
-------------------------
---  Starting program  --
-------------------------
+-------------------------
+--  Starting program 3 --
+-------------------------
 
 report "Starting program 3";
 
@@ -315,6 +330,13 @@ wait for 10 ns;
 s5 <= '1';	
 
 wait for 500 ns;
+
+if sap_out = "01011100" then
+  report "Test passed!";
+else
+  report "Test failed";
+end if;
+
 
 stop <= '1';
 wait;
