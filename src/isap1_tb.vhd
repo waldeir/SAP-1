@@ -380,7 +380,7 @@ end loop;
 --  Starting program 1 in manual mode --
 ----------------------------------------
 
-report "Starting program 1";
+report "Starting program 1 in manual mode";
 
 
 -- manual/auto 1/0
