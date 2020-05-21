@@ -3,7 +3,7 @@
 # To enable data inputs use:
 # make isap1_tb
 
-all: sap1_tb 
+all: isap1_tb 
 
 CC = ghdl
 
