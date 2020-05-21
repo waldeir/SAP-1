@@ -5,7 +5,7 @@ entity ring_counter is
     Port ( bar_clk : in  std_logic;
            bar_clr : in  std_logic;
            t_state : out  std_logic_vector(5 downto 0));
-end Ring_counter;
+end ring_counter;
  
 architecture Behavioral of Ring_counter is
 signal t_tmp: std_logic_vector(5 downto 0):= "000001";
