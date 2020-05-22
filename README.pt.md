@@ -3,7 +3,7 @@ Language: [English](https://github.com/waldeir/SAP-1)
 # Simple As Possible Computer - 1 (SAP-1)
 
 Esta é uma implementação em VHDL do conhecido computador SAP-1, descrito no
-livro [Malvino - Eletrônica Digital para Computadores - 3ª Edição] [livro]. A
+livro [Malvino - Eletrônica Digital para Computadores - 3ª Edição][livro]. A
 **Figura 1** mostra o diagrama de blocos da unidade computacional, onde os
 estados ativos dos sinais foram escolhidos para corresponder aos descritos no
 livro. Deste modo, as mesmas formas de onda apresentadas no capítulo SAP-1
