@@ -3,7 +3,7 @@
 # To enable data inputs use:
 # make isap1_tb
 
-all: isap1_tb 
+all: isap1_tb sap1_tb 
 
 CC = ghdl
 
@@ -59,6 +59,10 @@ work/ringcounter.o: src/ringcounter.vhd
 	@echo Analyzing ringcounter.vhd
 	$(CC) -a --workdir=work src/ringcounter.vhd
 
+work/debounce.o: src/debounce.vhd
+	@echo Analyzing debounce.vhd
+	$(CC) -a --workdir=work src/debounce.vhd
+
 work/sap1.o: src/sap1.vhd          
 	@echo Analyzing sap1.vhd
 	$(CC) -a --workdir=work src/sap1.vhd 
@@ -77,13 +81,13 @@ work/isap1_tb.o: src/isap1_tb.vhd
 	$(CC) -a --workdir=work src/isap1_tb.vhd 
 
 
-sap1_tb: work/sap1_tb.o work/sap1.o work/accumulator.o work/addsub.o work/pc.o work/regb.o work/regout.o work/mar.o work/ram.o work/ir.o work/ctrlseq.o work/ringcounter.o work/jk-flipflop.o        
+sap1_tb: work/sap1_tb.o work/sap1.o work/accumulator.o work/addsub.o work/pc.o work/regb.o work/regout.o work/mar.o work/ram.o work/ir.o work/ctrlseq.o work/ringcounter.o work/jk-flipflop.o work/debounce.o
 	@echo Elaborating sap1_tb
 	$(CC) -e --workdir=work sap1_tb 
 
-isap1_tb: work/isap1_tb.o work/isap1.o work/accumulator.o work/addsub.o work/pc.o work/regb.o work/regout.o work/imar.o work/iram.o work/ir.o work/ctrlseq.o work/ringcounter.o work/jk-flipflop.o        
+isap1_tb: work/isap1_tb.o work/isap1.o work/accumulator.o work/addsub.o work/pc.o work/regb.o work/regout.o work/imar.o work/iram.o work/ir.o work/ctrlseq.o work/ringcounter.o work/jk-flipflop.o work/debounce.o       
 	@echo Elaborating isap1_tb
 	$(CC) -e --workdir=work isap1_tb 
 
 clean :
-	rm work/*.o *.o work/*.cf
+	rm work/*.o *.o work/*.cf sap1_tb isap1_tb

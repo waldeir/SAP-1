@@ -46,6 +46,10 @@ signal s3 : std_logic_vector (7 downto 0);
 
 constant clk_period : time := 10 ns;
 
+-- Must be bigger than debounce_ticks * clk_period, where debounce_ticks is 
+-- set in isap1.vhd
+constant delay_time : time := 40 ns;
+
 signal stop : std_logic := '0';
 
 
@@ -183,8 +187,7 @@ s4 <= '1';
 s7 <= '0';
 
 
-
-
+wait for delay_time;
 
 
 -------------------------------
@@ -196,6 +199,7 @@ s2 <= '0';
 -- start/clear 1/0
 s5 <= '0';	
 
+wait for delay_time;
 
 report "Recording program 1";
 for i in 0 to 15 loop
@@ -203,16 +207,16 @@ for i in 0 to 15 loop
   s1 <= RAM_adresses(i);
   -- Input data
   s3 <= RAM_prog1(i);
-  wait for 1 ns;
+  wait for delay_time;
   
   -- Pulse to write
 
   -- read/write 1/0
   s4 <= '0';
-  wait for 1 ns;
+  wait for delay_time;
   -- read/write 1/0
   s4 <= '1';
-  wait for 1 ns;
+  wait for delay_time;
 
 end loop;
 
@@ -225,7 +229,7 @@ report "Starting program 1";
 
  -- run/prog 1/0
 s2 <= '1';
-wait for 10 ns;
+wait for delay_time;
 
 -- start/clear 1/0
 s5 <= '1';	
@@ -248,6 +252,7 @@ s2 <= '0';
 -- start/clear 1/0
 s5 <= '0';	
 
+wait for delay_time;
 
 report "Recording program 2";
 for i in 0 to 15 loop
@@ -255,16 +260,16 @@ for i in 0 to 15 loop
   s1 <= RAM_adresses(i);
   -- Input data
   s3 <= RAM_prog2(i);
-  wait for 1 ns;
+  wait for delay_time;
   
   -- Pulse to write
 
   -- read/write 1/0
   s4 <= '0';
-  wait for 1 ns;
+  wait for delay_time;
   -- read/write 1/0
   s4 <= '1';
-  wait for 1 ns;
+  wait for delay_time;
 
 end loop;
 
@@ -307,16 +312,16 @@ for i in 0 to 15 loop
   s1 <= RAM_adresses(i);
   -- Input data
   s3 <= RAM_prog3(i);
-  wait for 1 ns;
+  wait for delay_time;
   
   -- Pulse to write
 
   -- read/write 1/0
   s4 <= '0';
-  wait for 1 ns;
+  wait for delay_time;
   -- read/write 1/0
   s4 <= '1';
-  wait for 1 ns;
+  wait for delay_time;
 
 end loop;
 
@@ -355,6 +360,7 @@ s2 <= '0';
 -- start/clear 1/0
 s5 <= '0';	
 
+wait for delay_time;
 
 report "Recording program 1";
 for i in 0 to 15 loop
@@ -362,16 +368,16 @@ for i in 0 to 15 loop
   s1 <= RAM_adresses(i);
   -- Input data
   s3 <= RAM_prog1(i);
-  wait for 1 ns;
+  wait for 50 ns;
   
   -- Pulse to write
 
   -- read/write 1/0
   s4 <= '0';
-  wait for 1 ns;
+  wait for 50 ns;
   -- read/write 1/0
   s4 <= '1';
-  wait for 1 ns;
+  wait for 50 ns;
 
 end loop;
 
@@ -388,10 +394,11 @@ s7 <= '1';
 
  -- run/prog 1/0
 s2 <= '1';
-wait for 10 ns;
+wait for delay_time;
 
 -- start/clear 1/0
 s5 <= '1';	
+
 
 
 -- Clock controled by s6 switch with random steps
@@ -399,10 +406,10 @@ s5 <= '1';
 for i  in 0 to 35 loop
   s6 <= '1';
   uniform (seed1, seed2, randomFactor);
-  wait for 5 ns + 10 ns * randomFactor;
+  wait for delay_time + 20 ns * randomFactor;
   s6 <= '0';
   uniform (seed1, seed2, randomFactor);
-  wait for 5 ns + 10 ns * randomFactor; 
+  wait for delay_time + 20 ns * randomFactor; 
 end loop;
 
 

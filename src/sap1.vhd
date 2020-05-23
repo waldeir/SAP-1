@@ -155,6 +155,21 @@ component ram is
   );
 end component ram;
 
+
+
+component debounce is
+  -- How many clock cycles to wait before transfer in_switch to out_switch
+  generic (debounce_ticks : integer);
+  port(
+    -- Clock
+    clk         : in  std_logic;
+    -- Input from Switch
+    in_switch   : in  std_logic;
+    -- Debounce signal
+    out_switch  : out std_logic);
+end component debounce;
+
+
 ----------------------------------------
 --  Intermediate signals declaration  --
 ----------------------------------------
@@ -185,10 +200,23 @@ signal ir_ctrlseq_bus : std_logic_vector ( 3 downto 0);
 
 signal clk, bar_clk, bar_clr, clr , bar_hlt: std_logic;
 
+signal ds5 : std_logic;
+
+constant debounce_ticks: integer := 3;
+
 begin
 
+-- Debounce
+
+debounce5: debounce generic map(debounce_ticks => debounce_ticks)
+                    port map(
+                            clk        => in_clk,
+                            in_switch  => s5,
+                            out_switch => ds5);
+                                          
+
 -- s5 start/clear 1/0
-clr <= '1' when s5 = '0' else '0';
+clr <= '1' when ds5 = '0' else '0';
 bar_clr <= not clr;
 
 -- stop the clock when bar_hlt is 0

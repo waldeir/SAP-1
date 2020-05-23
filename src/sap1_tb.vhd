@@ -58,7 +58,7 @@ process
 begin
 
   s5 <= '0';
-  wait for 10 ns;
+  wait for 21 ns;
 
   s5 <= '1';
 	wait for 500 ns;

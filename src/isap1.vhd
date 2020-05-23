@@ -163,6 +163,21 @@ component addsub is
 end component addsub;
 
 
+component debounce is
+  generic(
+    -- How many clock ticks to wait before transfer in_switch to out_switch
+    debounce_ticks: integer);
+  port (
+    -- Clock
+    clk        : in  std_logic;
+    -- Input from the switch
+    in_switch  : in  std_logic;
+    -- Debounced signal
+    out_switch : out std_logic
+    );
+end component debounce;
+
+
 component imar is
   port (
   -- Enable read from w_bus
@@ -205,7 +220,6 @@ signal bar_clk    : std_logic;
 signal clk        : std_logic;
 signal clr        : std_logic;
 signal bar_clr    : std_logic;
--- TODO: rever o HLT barrado
 signal bar_hlt    : std_logic;
 
 signal ram_mar_bus : std_logic_vector (3 downto 0);
@@ -213,21 +227,60 @@ signal acc_addsub_bus : std_logic_vector ( 7 downto 0);
 signal regb_addsub_bus   : std_logic_vector ( 7 downto 0);
 signal ir_ctrlseq_bus : std_logic_vector ( 3 downto 0);
 
+signal ds2, ds4, ds5, ds6, ds7 : std_logic;
+
+
+-- addjust clock ticks
+constant debounce_ticks: integer := 3;
+
 begin
 
 -- s5 start/clear  1/0
-clr <= '1' when s5 = '0' else  '0';
+clr <= '1' when ds5 = '0' else  '0';
 bar_clr <= not clr;
 -- s6 single step
 -- s7 manual/auto  1/0
 
-clk <= ((s6 and s7) or (in_clk and not s7)) and bar_hlt;
+clk <= ((ds6 and ds7) or (in_clk and not ds7)) and bar_hlt;
 bar_clk <= not clk;
 
 
 ------------------------------
 -- Components instantiation --
 ------------------------------
+
+
+
+debounce2: debounce generic map(debounce_ticks => debounce_ticks)
+                    port map(
+                            clk        => in_clk,
+                            in_switch  => s2,
+                            out_switch => ds2);
+
+debounce4: debounce generic map(debounce_ticks => debounce_ticks)
+                    port map(
+                            clk        => in_clk,
+                            in_switch  => s4,
+                            out_switch => ds4);
+
+debounce5: debounce generic map(debounce_ticks => debounce_ticks)
+                    port map(
+                            clk        => in_clk,
+                            in_switch  => s5,
+                            out_switch => ds5);
+
+debounce6: debounce generic map(debounce_ticks => debounce_ticks)
+                    port map(
+                            clk        => in_clk,
+                            in_switch  => s6,
+                            out_switch => ds6);
+
+debounce7: debounce generic map(debounce_ticks => debounce_ticks)
+                    port map(
+                            clk        => in_clk,
+                            in_switch  => s7,
+                            out_switch => ds7);
+
 
 
 accumulator0: accumulator port map (
@@ -274,7 +327,7 @@ imar0 : imar port map(
                  clk        => clk,
                  out_to_ram => ram_mar_bus,
                  s1         => s1,
-                 s2         => s2
+                 s2         => ds2
                  );
 
 
@@ -283,7 +336,7 @@ iram0 : iram port map (
                  w_bus       => w_bus,
                  in_from_mar => ram_mar_bus,
                  s3          => s3,
-                 s4          => s4
+                 s4          => ds4
                  );
 
 
