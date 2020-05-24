@@ -49,6 +49,23 @@ the clock must be manually provided by pressing `s6` repeatedly.
 | `s7`          | '1' (manual): Clock is provided by successively pushing `s6` - '0' (auto): clock is read from `in_clk`| 
 
 
+### Debounce circuit.
+
+A debounce circuit was implemented in the file `debounce.vhd` and instantiated
+to the switches `s2`, `s4`, `s5`, `s6`, `s7`. To filter the ripple of a
+commutation it monitors the state of a switch and if it changes the circuit
+stores the value and waits for three clock cycles then read the input again, if
+the value remains the same then the new input is passed on. 
+
+In order to reduce simulation time the amount of clock cycles the debounce
+circuit  waits is 3, which for the current simulation frequency (100 MHz) it
+leads a delay of 30 ns. However, in a realistic scenario this delay should be
+around 10 ms, which can be achieved by changing the constant
+
+```vhdl
+constant debounce_ticks: integer := 3;
+```
+in the `isap1.vhd` file, accordingly to the selected clock.
 
 ## SAP-1 with no Input switches
 
