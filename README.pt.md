@@ -58,7 +58,7 @@ pressionando `s6` repetidamente.
 | `s7` | '1' (manual): O *clock* é fornecido pressionando-se sucessivamente `s6` - '0' (auto): o *clock* é lido a partir de `in_clk` |
 
 
-## Circuito de *debounce*.
+## Circuito de *debounce*
 
 Um circuito de *debounce* foi implementado no arquivo `debounce.vhd` e
 instanciado para dos *switches* `s2`, `s4`, `s5`, `s6`, `s7`. Para filtrar o

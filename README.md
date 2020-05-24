@@ -56,7 +56,7 @@ the clock must be manually provided by pressing `s6` repeatedly.
 | `s7`          | '1' (manual): Clock is provided by successively pushing `s6` - '0' (auto): clock is read from `in_clk`| 
 
 
-## Debounce circuit.
+## Debounce circuit
 
 A debounce circuit was implemented in the file `debounce.vhd` and instantiated
 to the switches `s2`, `s4`, `s5`, `s6`, `s7`. To filter the ripple of a
