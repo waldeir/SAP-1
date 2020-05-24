@@ -145,7 +145,9 @@ ou
 ```
 O que produz o arquivo `waveform.vcd`, que pode ser aberto com um visualizador como o *gtkwave*, **Figura 5** 
 
-![**Figure 5**: Waveforms of a SAP-1 simulation.](images/isap1_waveforms.png)
+![](images/isap1_waveforms.png)
+
+**Figure 5**: Waveforms of a SAP-1 simulation.
 
 Programas personalizados podem ser escritos no arquivo testbench
 `isap1_tb.vhd`, de onde serão carregados na RAM do SAP-1 e por ele executados. 
