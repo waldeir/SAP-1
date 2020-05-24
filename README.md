@@ -2,7 +2,14 @@ Language: [Portuguese](https://github.com/waldeir/SAP-1/blob/master/README.pt.md
 
 # Simple As Possible computer - 1  (SAP-1)
 
-## Introduction
+* [Introduction](#introduction)
+* [The computer](#the-computer)
+   * [Debounce circuit](#debounce-circuit)
+* [SAP-1 with no Input switches](#sap-1-with-no-input-switches)
+* [Simulation with GHDL](#simulation-with-ghdl)
+
+
+# Introduction
 
 This is a VHDL implementation of the well known computer SAP-1, described in
 the book [Malvino - Digital Computer Electronics - 3rd Edition][book]. The **Figure
@@ -16,7 +23,7 @@ waveforms presented in the SAP-1 chapter can be visualized in the simulation.
 **Figure 1**: Block diagram of SAP-1 with data entries. 
 Beside each signal, there is how its name is referred into the VHDL code.
 
-## The computer
+# The computer
 
 As shown in **Figure 2**, the computer has eight inputs: the switches `s1` to
 `s7`, described in **Table 1**, and the clock input `in_clk`. The program is loaded into
@@ -49,7 +56,7 @@ the clock must be manually provided by pressing `s6` repeatedly.
 | `s7`          | '1' (manual): Clock is provided by successively pushing `s6` - '0' (auto): clock is read from `in_clk`| 
 
 
-### Debounce circuit.
+## Debounce circuit.
 
 A debounce circuit was implemented in the file `debounce.vhd` and instantiated
 to the switches `s2`, `s4`, `s5`, `s6`, `s7`. To filter the ripple of a
@@ -90,7 +97,7 @@ simplified version of the SAP-1.
 
 **Figure 4**: SAP-1 With just the start/clear switch.
 
-## Simulation with GHDL
+# Simulation with GHDL
 
 The simulation is performed with the free software [GHDL][ghdl], which uses the
 \*.vhd files to generate executables that can be run by your PC and provide

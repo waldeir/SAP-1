@@ -2,7 +2,13 @@ Language: [English](https://github.com/waldeir/SAP-1)
 
 # Simple As Possible Computer - 1 (SAP-1)
 
-## Introdução
+* [Introdução](#introdução)
+* [O computador](#o-computador)
+   * [Circuito de debounce.](#circuito-de-debounce)
+* [SAP-1 sem <em>Switches</em> de entrada](#sap-1-sem-switches-de-entrada)
+* [Simulação com GHDL](#simulação-com-ghdl)
+
+# Introdução
 
 Esta é uma implementação em VHDL do conhecido computador SAP-1, descrito no
 livro [Malvino - Eletrônica Digital para Computadores - 3ª Edição][livro]. A
@@ -17,7 +23,7 @@ podem ser visualizadas na simulação.
 **Figura 1**: Diagrama de blocos do SAP-1 com entradas de dados.  Ao lado de
 cada sinal, está como seu nome é referido no código VHDL.
 
-## O computador
+# O computador
 
 Conforme mostrado na **Figura 2**, o computador possui oito entradas: os
 *switches* `s1` para `s7`, descritos na **Tabela 1**, e a entrada de *clock*
@@ -52,7 +58,7 @@ pressionando `s6` repetidamente.
 | `s7` | '1' (manual): O *clock* é fornecido pressionando-se sucessivamente `s6` - '0' (auto): o *clock* é lido a partir de `in_clk` |
 
 
-### Debounce circuit.
+## Circuito de *debounce*.
 
 Um circuito de *debounce* foi implementado no arquivo `debounce.vhd` e
 instanciado para dos *switches* `s2`, `s4`, `s5`, `s6`, `s7`. Para filtrar o
@@ -78,7 +84,7 @@ constant debounce_ticks: integer := 3;
 no arquivo `isap1.vhd`, de acordo com o *clock* selecionado. 
 
 
-## SAP-1 sem *Switches* de entrada
+# SAP-1 sem *Switches* de entrada
 
 Esta implementação visa principalmente fornecer uma maneira de ver os sinais do
 SAP-1 durante a execução de um programa. Portanto, uma versão sem as entradas
@@ -110,7 +116,7 @@ Em seguida, abra o arquivo `waveform.vcd` com um programa visualizador de ondas 
 **Figura 4**: SAP-1 apenas com o *switch* start/clear.
 
 
-## Simulação com GHDL
+# Simulação com GHDL
 
 A simulação é realizada com o *software* livre [GHDL][ghdl], que usa os
 arquivos \*.vhd para criar executáveis que podem ser rodados pelo seu PC.  Se
