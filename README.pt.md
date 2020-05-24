@@ -2,6 +2,8 @@ Language: [English](https://github.com/waldeir/SAP-1)
 
 # Simple As Possible Computer - 1 (SAP-1)
 
+## Introdução
+
 Esta é uma implementação em VHDL do conhecido computador SAP-1, descrito no
 livro [Malvino - Eletrônica Digital para Computadores - 3ª Edição][livro]. A
 **Figura 1** mostra o diagrama de blocos da unidade computacional, onde os
@@ -15,14 +17,16 @@ podem ser visualizadas na simulação.
 **Figura 1**: Diagrama de blocos do SAP-1 com entradas de dados.  Ao lado de
 cada sinal, está como seu nome é referido no código VHDL.
 
+## O computador
+
 Conforme mostrado na **Figura 2**, o computador possui oito entradas: os
-*switches* `s1` para `s7`, descritos na **Tabela 1**, e a entrada de clock `in_clk`. O programa
-é carregado na memória RAM de 16 bits antes do computador iniciar, usando
-os interruptores `s1`,` s3` e `s4`. Enquanto `s5` estiver definido como 0
-(clear) e `s2` estiver definido como 0 (prog), os dados e seu endereço de
-destino são alimentados respectivamente em `s3` e` s1` e um pulso em `s4` é
-executado para escrever a informação. A operação é repetida até que todos o
-programa é gravado, então `s2` é definido como 0 (run), conectando o 
+*switches* `s1` para `s7`, descritos na **Tabela 1**, e a entrada de clock
+`in_clk`. O programa é carregado na memória RAM de 8 vs 16 bits antes do computador
+iniciar, usando os interruptores `s1`,` s3` e `s4`. Enquanto `s5` estiver
+definido como 0 (clear) e `s2` estiver definido como 0 (prog), os dados e seu
+endereço de destino são alimentados respectivamente em `s3` e` s1` e um pulso
+em `s4` é executado para escrever a informação. A operação é repetida até que
+todos o programa é gravado, então `s2` é definido como 0 (run), conectando o
 *Memory Address Register* (MAR) ao barramento W.
 
 Se `s7` for 0 (auto), o programa será iniciado quando `s5` for 1
@@ -48,28 +52,6 @@ pressionando `s6` repetidamente.
 | `s7` | '1' (manual): O clock é fornecido pressionando-se sucessivamente `s6` - '0' (auto): o clock é lido a partir de `in_clk` |
 
 
-
-
-## Simulação com GHDL
-
-A simulação é realizada usando [GHDL][ghdl].  Programas personalizados podem
-ser gravados no arquivo testbench `isap1_tb.vhd`, onde serão carregados na RAM
-do SAP-1 e executados.
-
-Se você estiver no Linux, certifique-se de ter *git*, *make* e [GHDL][ghdl]
-instalados e execute:
-
-```bash
-git clone https://github.com/waldeir/SAP-1
-cd SAP-1 /
-make
-./isap1_tb --vcd = waveform.vcd
-```
-
-O procedimento gera o arquivo `waveform.vcd`, que pode ser aberto no
-um programa visualizador de ondas como *gtkwave*. Os nomes das variáveis de sinal são apresentados nas 
-**Figuras 1** e **2**, e seu comportamento durante o tempo são armazenados no arquivo
-`waveform.vcd`.
 
 
 ## SAP-1 sem *Switches* de entrada
@@ -102,6 +84,42 @@ Em seguida, abra o arquivo `waveform.vcd` com um programa visualizador de ondas 
 ![](images/sap1_top_level.png)
 
 **Figura 4**: SAP-1 apenas com o *switch* start/clear.
+
+
+## Simulação com GHDL
+
+A simulação é realizada com o *software* livre [GHDL][ghdl], que usa os
+arquivos \*.vhd para criar executáveis que podem ser rodados pelo seu PC.  Se
+você estiver no Linux, certifique-se de ter *git*, *make* e [GHDL][ghdl]
+instalados e execute:
+
+```bash
+git clone https://github.com/waldeir/SAP-1
+cd SAP-1 /
+make
+```
+
+O procedimento gera os executáveis `sap1_tb` e `isap1_tb`, arquivo
+`waveform.vcd`, o primeiro é a simulação para o SAP-1 da **Figura 2**, e o
+último é para a versão sem `switches` de entrada da **Figura 4**. Os gráficos
+de estado lógico vs tempo de qualquer das duas simulações rodando
+
+ 
+```bash
+./sap_tb --vcd=waveform.vcd
+```
+ou
+
+```
+./isap_tb --vcd=waveform.vcd
+```
+O que produz o arquivo `waveform.vcd`, que pode ser aberto com um visualizador como o *gtkwave*, **Figura 5** 
+
+![**Figure 5**: Waveforms of a SAP-1 simulation.](images/isap1_waveforms.png)
+
+Programas personalizados podem ser escritos no arquivo testbench
+`isap1_tb.vhd`, de onde serão carregados na RAM do SAP-1 e por ele executados. 
+
 
 [gtkwave]:http://gtkwave.sourceforge.net/ "Visualizador de ondas"
 

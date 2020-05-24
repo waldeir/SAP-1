@@ -2,6 +2,8 @@ Language: [Portuguese](https://github.com/waldeir/SAP-1/blob/master/README.pt.md
 
 # Simple As Possible computer - 1  (SAP-1)
 
+## Introduction
+
 This is a VHDL implementation of the well known computer SAP-1, described in
 the book [Malvino - Digital Computer Electronics - 3rd Edition][book]. The **Figure
 1** shows the block diagram of the computational unit, where the active states of the signals 
@@ -14,9 +16,11 @@ waveforms presented in the SAP-1 chapter can be visualized in the simulation.
 **Figure 1**: Block diagram of SAP-1 with data entries. 
 Beside each signal, there is how its name is referred into the VHDL code.
 
+## The computer
+
 As shown in **Figure 2**, the computer has eight inputs: the switches `s1` to
 `s7`, described in **Table 1**, and the clock input `in_clk`. The program is loaded into
-the 16 bit RAM memory before the computer run, using the switches `s1`, `s3`
+the 8 vs 16 bits RAM memory before the computer run, using the switches `s1`, `s3`
 and `s4`. While `s5` is set to 0 (clear) and `s2` is set to 0 (prog), data and
 its destination address are fed respectively to `s3` and `s1` and a pulse in
 `s4` is performed to write the information. The operation is repeated until all
@@ -46,27 +50,6 @@ the clock must be manually provided by pressing `s6` repeatedly.
 
 
 
-
-## Simulation with GHDL
-
-The simulation is performed using [GHDL][ghdl].
-Custom programs can be written to the testbench file `isap1_tb.vhd` where they will be loaded to the SAP-1's RAM and then executed. 
-
-If you are in Linux, make sure to have *git*, *make* and  [GHDL][ghdl] installed and run:
-
-```bash
-git clone https://github.com/waldeir/SAP-1
-cd SAP-1/
-make
-./isap1_tb --vcd=waveform.vcd
-```
-
-The procedure generates the waveform file `waveform.vcd`, that can be opened in
-a program like *gtkwave*. The names of signal variables are presented in the
-**Figures 1** and **2**, and their behavior during time are stored in the file
-`waveform.vcd`.
-
-
 ## SAP-1 with no Input switches
 
 This implementation is mainly intended to provide a way to see the internal
@@ -80,14 +63,6 @@ The **Figure 3** shows the block diagram with the *Memory Address Register*
 `mar.vhd` and `ram.vhd`, respectively. The **Figure 4** presents the resulting
 simplified version of the SAP-1.
 
-In order to run this version check do:
-
-```bash
-make sap1_tb
-./sap1_tb --vcd=waveform.vcd
-```
-
-Then open the file `waveform.vcd` with a wave viewer program like [gtkwave][gtkwave]. 
 
 
 ![](images/block_diagram_sap1.png)
@@ -97,6 +72,41 @@ Then open the file `waveform.vcd` with a wave viewer program like [gtkwave][gtkw
 ![](images/sap1_top_level.png)
 
 **Figure 4**: SAP-1 With just the start/clear switch.
+
+## Simulation with GHDL
+
+The simulation is performed with the free software [GHDL][ghdl], which uses the
+\*.vhd files to generate executables that can be run by your PC and provide
+waveform outputs.  If you are in Linux, make sure to have *git*, *make* and
+[GHDL][ghdl] installed and run:
+
+```bash
+git clone https://github.com/waldeir/SAP-1
+cd SAP-1/
+make
+```
+
+That will produce the executables `isap1_tb` and `sap1_tb`. The first is the
+simulation for the SAP-1 in **Figure 2**, the latter is for the version with
+no input in **Figure 4**. You can obtain the waveforms vs time graphs of either
+simulation by running in linux command line: 
+
+```bash
+./sap_tb --vcd=waveform.vcd
+```
+or
+```
+./isap_tb --vcd=waveform.vcd
+```
+
+The procedure generates the waveform file `waveform.vcd`, that can be opened in
+a program like *gtkwave*, as in **Figure 5**.
+
+![**Figure 5**: Waveforms of a SAP-1 simulation.](images/isap1_waveforms.png)
+
+
+Custom programs can be written to the testbench file `isap1_tb.vhd` where they
+will be loaded to the SAP-1's RAM and then executed.
 
 [gtkwave]:http://gtkwave.sourceforge.net/ "Wave viewer"
 
