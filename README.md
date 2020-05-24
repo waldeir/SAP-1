@@ -119,8 +119,9 @@ or
 The procedure generates the waveform file `waveform.vcd`, that can be opened in
 a program like *gtkwave*, as in **Figure 5**.
 
-![**Figure 5**: Waveforms of a SAP-1 simulation.](images/isap1_waveforms.png)
+![](images/isap1_waveforms.png)
 
+**Figure 5**: Waveforms of a SAP-1 simulation.
 
 Custom programs can be written to the testbench file `isap1_tb.vhd` where they
 will be loaded to the SAP-1's RAM and then executed.
