@@ -20,7 +20,7 @@ cada sinal, está como seu nome é referido no código VHDL.
 ## O computador
 
 Conforme mostrado na **Figura 2**, o computador possui oito entradas: os
-*switches* `s1` para `s7`, descritos na **Tabela 1**, e a entrada de clock
+*switches* `s1` para `s7`, descritos na **Tabela 1**, e a entrada de *clock*
 `in_clk`. O programa é carregado na memória RAM de 8 vs 16 bits antes do computador
 iniciar, usando os interruptores `s1`,` s3` e `s4`. Enquanto `s5` estiver
 definido como 0 (clear) e `s2` estiver definido como 0 (prog), os dados e seu
@@ -49,7 +49,7 @@ pressionando `s6` repetidamente.
 | `s4` | '1' (read): a memória está pronta para ser lida pelo SAP-1 - '0' (write): escreva na RAM o conteúdo de `s3` no endereço especificado por` s1` |
 | `s5` | '1' (start): Coloca os sinais `clr` e` bar_clr` nos estados inativos, iniciando o computador - 0 (clear): Redefine o Contador de Programa para 0, o Contador em Anel  para o estado T1 e o Registrador de Instrução para '00000000' |
 | `s6` | Passo único |
-| `s7` | '1' (manual): O clock é fornecido pressionando-se sucessivamente `s6` - '0' (auto): o clock é lido a partir de `in_clk` |
+| `s7` | '1' (manual): O *clock* é fornecido pressionando-se sucessivamente `s6` - '0' (auto): o *clock* é lido a partir de `in_clk` |
 
 
 ### Debounce circuit.
@@ -58,15 +58,15 @@ Um circuito de *debounce* foi implementado no arquivo `debounce.vhd` e
 instanciado para dos *switches* `s2`, `s4`, `s5`, `s6`, `s7`. Para filtrar o
 *ripple* de uma comutação ele monitora o estado de um *switch* e se uma mudança
 de estado é detectada, o circuito armazena o valor e espera por três ciclos de
-clock, então lê a entrada novamente, se o valor for o mesmo que o armazenado,
+*clock*, então lê a entrada novamente, se o valor for o mesmo que o armazenado,
 então a entrada é passada adiante já estabilizada.
 
-In order to reduce simulation time the amount of clock cycles the debounce
+In order to reduce simulation time the amount of *clock* cycles the debounce
 circuit  waits is 3, which for the current simulation frequency (100 MHz) it
 leads a delay of 30 ns. However, in a realistic scenario this delay should be
 around 10 ms, which can be achieved by changing the constant
 
-Para reduzir o tempo de simulação, a quantidade de ciclos de clock que o
+Para reduzir o tempo de simulação, a quantidade de ciclos de *clock* que o
 circuito de retorno espera é 3, o que, para a frequência de simulação atual
 (100 MHz), leva a um atraso de 30 ns. No entanto, em um cenário realista, esse
 atraso deve ficar em torno de 10 ms, o que pode ser alcançado alterando a
@@ -75,7 +75,7 @@ constante
 ```vhdl
 constant debounce_ticks: integer := 3;
 ```
-no arquivo `isap1.vhd`, de acordo com o clock selecionado. 
+no arquivo `isap1.vhd`, de acordo com o *clock* selecionado. 
 
 
 ## SAP-1 sem *Switches* de entrada
