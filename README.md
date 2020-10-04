@@ -12,10 +12,11 @@ Language: [Portuguese](https://github.com/waldeir/SAP-1/blob/master/README.pt.md
 # Introduction
 
 This is a VHDL implementation of the well known computer SAP-1, described in
-the book [Malvino - Digital Computer Electronics - 3rd Edition][book]. The **Figure
-1** shows the block diagram of the computational unit, where the active states of the signals 
-where chosen to match the ones described in the book. Therefore the same
-waveforms presented in the SAP-1 chapter can be visualized in the simulation.
+the book [Malvino - Digital Computer Electronics - 3rd Edition][book]. The
+**Figure 1** shows the block diagram of the computational unit, where the
+active states of the signals were chosen to match the ones described in the
+book. Therefore, the same waveforms presented in the SAP-1 chapter can be
+visualized in the simulation.
 
 
 ![](images/isap1_block_diagram.png)
@@ -60,11 +61,11 @@ the clock must be manually provided by pressing `s6` repeatedly.
 
 A debounce circuit was implemented in the file `debounce.vhd` and instantiated
 to the switches `s2`, `s4`, `s5`, `s6`, `s7`. To filter the ripple of a
-commutation it monitors the state of a switch and if it changes the circuit
-stores the value and waits for three clock cycles then read the input again, if
-the value remains the same then the new input is passed on. 
+commutation, it monitors the state of a switch and if it changes, the circuit
+stores the value and waits for three clock cycles, then read the input again, if
+the value remains the same, then the new input is passed on. 
 
-In order to reduce simulation time the amount of clock cycles the debounce
+In order to reduce simulation time, the amount of clock cycles the debounce
 circuit  waits is 3, which for the current simulation frequency (100 MHz) it
 leads a delay of 30 ns. However, in a realistic scenario this delay should be
 around 10 ms, which can be achieved by changing the constant
@@ -77,7 +78,7 @@ in the `isap1.vhd` file, accordingly to the selected clock.
 ## SAP-1 with no Input switches
 
 This implementation is mainly intended to provide a way to see the internal
-signals of SAP-1 during an execution of a program. Therefore a version with no
+signals of SAP-1 during an execution of a program. Therefore, a version with no
 inputs is also provided, where the simulation is performed without the
 recording step. The program is written direct by the user to the RAM file
 `ram.vhd` and the start of the execution is controlled with the `s5` switch.
@@ -130,7 +131,7 @@ a program like *gtkwave*, as in **Figure 5**.
 
 **Figure 5**: Waveforms of a SAP-1 simulation.
 
-Custom programs can be written to the testbench file `isap1_tb.vhd` where they
+Custom programs can be written to the testbench file `isap1_tb.vhd`, where they
 will be loaded to the SAP-1's RAM and then executed.
 
 [gtkwave]:http://gtkwave.sourceforge.net/ "Wave viewer"
