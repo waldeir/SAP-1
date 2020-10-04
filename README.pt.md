@@ -32,7 +32,7 @@ iniciar, usando os interruptores `s1`,` s3` e `s4`. Enquanto `s5` estiver
 definido como 0 (clear) e `s2` estiver definido como 0 (prog), os dados e seu
 endereço de destino são alimentados respectivamente em `s3` e` s1` e um pulso
 em `s4` é executado para escrever a informação. A operação é repetida até que
-todos o programa é gravado, então `s2` é definido como 0 (run), conectando o
+todo o programa é gravado, então `s2` é definido como 0 (run), conectando o
 *Memory Address Register* (MAR) ao barramento W.
 
 Se `s7` for 0 (auto), o programa será iniciado quando `s5` for 1
@@ -68,7 +68,7 @@ de estado é detectada, o circuito armazena o valor e espera por três ciclos de
 então a entrada é passada adiante já estabilizada.
 
 Para reduzir o tempo de simulação, a quantidade de ciclos de *clock* que o
-circuito de retorno espera é 3, o que, para a frequência de simulação atual
+circuito de retorno espera é 3, o que para a frequência de simulação atual
 (100 MHz), leva a um atraso de 30 ns. No entanto, em um cenário realista, esse
 atraso deve ficar em torno de 10 ms, o que pode ser alcançado alterando a
 constante
@@ -84,8 +84,8 @@ no arquivo `isap1.vhd`, de acordo com o *clock* selecionado.
 Esta implementação visa principalmente fornecer uma maneira de ver os sinais do
 SAP-1 durante a execução de um programa. Portanto, uma versão sem as entradas
 de dados também é fornecida, onde a simulação é realizada sem a etapa de
-gravação. O programa é escrito diretamente pelo usuário no arquivo RAM
-`ram.vhd` e no o início da execução é controlado com o *switch* `s5`.
+gravação. O programa é escrito diretamente pelo usuário no arquivo 
+`ram.vhd` e o início da execução é controlado com o *switch* `s5`.
 
 A **Figura 3** mostra o diagrama de blocos com o *Memory Address Register*
 (`imar.vhd`) e RAM (`iram.vhd`) substituídos por sua versão sem entrada,
@@ -96,7 +96,7 @@ Para executar esta versão faça:
 
 ```bash
 make sap1_tb
-./sap1_tb --vcd = waveform.vcd
+./sap1_tb --vcd=waveform.vcd
 ``` 
 
 Em seguida, abra o arquivo `waveform.vcd` com um programa visualizador de ondas como [gtkwave][gtkwave].
@@ -114,7 +114,7 @@ Em seguida, abra o arquivo `waveform.vcd` com um programa visualizador de ondas 
 # Simulação com GHDL
 
 A simulação é realizada com o *software* livre [GHDL][ghdl], que usa os
-arquivos \*.vhd para criar executáveis que podem ser rodados pelo seu PC.  Se
+arquivos \*.vhd para criar executáveis que podem ser rodados pelo seu PC. Se
 você estiver no Linux, certifique-se de ter *git*, *make* e [GHDL][ghdl]
 instalados e execute:
 
@@ -127,7 +127,7 @@ make
 O procedimento gera os executáveis `sap1_tb` e `isap1_tb`, arquivo
 `waveform.vcd`, o primeiro é a simulação para o SAP-1 da **Figura 2**, e o
 último é para a versão sem `switches` de entrada da **Figura 4**. Os gráficos
-de estado lógico vs tempo de qualquer das duas simulações rodando
+de estado lógico vs tempo de qualquer das duas simulações são criados rodando
 
  
 ```bash
